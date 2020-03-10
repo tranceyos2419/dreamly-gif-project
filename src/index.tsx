@@ -7,12 +7,16 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { rrfProps } from "./config/fbConfig";
+import { ThemeProvider } from "styled-components";
+import theme from "./styles/theme";
 
 ReactDOM.render(
   <Provider store={store}>
-    <ReactReduxFirebaseProvider {...rrfProps}>
-      <App />
-    </ReactReduxFirebaseProvider>
+    <ThemeProvider theme={theme}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <App />
+      </ReactReduxFirebaseProvider>
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
