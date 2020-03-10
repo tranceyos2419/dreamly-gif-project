@@ -5,10 +5,14 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { rrfProps } from "./config/fbConfig";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")
 );
