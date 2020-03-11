@@ -4,6 +4,7 @@ import background from "../../../assets/images/Landing-background.svg";
 import { Link } from "react-router-dom";
 interface Props {}
 
+//todo do I need padding?
 const LandingWrapper = styled.div(
   () => css`
     background: url(${background}) no-repeat center center fixed;
