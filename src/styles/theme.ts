@@ -20,6 +20,7 @@ const theme = {
   },
   size: {
     font: {
+      huge: '1.778em',
       large: '1.33em', // 48px (36px is regular)
       regular: '1rem',
       small: '0.66em', // 24px (36px is regular)

@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Counter from "../components/pages/counter/Counter";
-import FirebaseTest from "../components/pages/firebaseTest/FirebaseTest";
 import Landing from "../components/pages/landing/Landing";
+import SignIn from "../components/pages/signin/SignIn";
+import SignUp from "../components/pages/signup/SignUp";
 interface Props {}
 
 const Routes = (props: Props) => {
@@ -10,7 +10,8 @@ const Routes = (props: Props) => {
     <Router>
       <Switch>
         <Route exact path="/" component={Landing} />
-        <Route exact path="/test" component={FirebaseTest} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/signin" component={SignIn} />
       </Switch>
     </Router>
   );
