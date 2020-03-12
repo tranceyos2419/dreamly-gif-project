@@ -8,7 +8,6 @@ export const useToFeedIfAuthenticated = () => {
   const auth = state.firebase.auth;
   const isEmpty = auth.isEmpty;
 
-  //todo auth checker
   useEffect(() => {
     !isEmpty && history.push("/feed");
   }, isEmpty);
@@ -20,7 +19,6 @@ export const useToLandingIfNotAuthenticated = () => {
   const auth = state.firebase.auth;
   const isEmpty = auth.isEmpty;
 
-  //todo auth checker
   useEffect(() => {
     isEmpty && history.push("/");
   }, isEmpty);
