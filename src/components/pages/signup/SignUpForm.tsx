@@ -3,7 +3,13 @@ import dayjs from "dayjs";
 import styled, { css } from "styled-components";
 import { GetErrorMessage, getCurrentDate } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
-import { useFirebase, useFirestore } from "react-redux-firebase";
+import {
+  useFirebase,
+  useFirestore,
+  useFirebaseConnect
+} from "react-redux-firebase";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
@@ -94,10 +100,17 @@ const SignUpForm = (props: Props) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const firebase = useFirebase();
   const firestore = useFirestore();
+  const history = useHistory();
+  const state = useSelector((state): any => state);
 
   //todo auth checker
   useEffect(() => {
-    // firebase.auth;
+    console.log("check auth");
+    const auth = state.firebase.auth;
+    console.log("isEmpty:", auth.isEmpty);
+    if (!auth.isEmpty) {
+      history.push("/feed");
+    }
   }, []);
 
   const onSubmit = async (data: any) => {
@@ -118,6 +131,8 @@ const SignUpForm = (props: Props) => {
         .collection("users")
         .doc(uid)
         .set(doc);
+
+      history.push("/feed");
     } catch (error) {
       alert("failed to sign up");
     }
