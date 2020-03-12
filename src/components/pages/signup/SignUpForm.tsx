@@ -128,13 +128,6 @@ const SignUpForm = (props: Props) => {
     }
   };
 
-  //todo remove
-  const logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => alert("you are signed out"));
-  };
   return (
     <>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
@@ -179,7 +172,6 @@ const SignUpForm = (props: Props) => {
           <SubmitInput type="submit" />
         </SubmitWrapper>
       </StyledForm>
-      <button onClick={() => logout()}>Logout</button>
     </>
   );
 };

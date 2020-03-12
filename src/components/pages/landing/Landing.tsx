@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import background from "../../../assets/images/Landing-background.svg";
 import { Link } from "react-router-dom";
+import { useToFeedIfAuthenticated } from "../../hooks/myCustomHooks";
 interface Props {}
 
 //todo do I need padding?
@@ -49,6 +50,7 @@ const StyledButton = styled.button(
 );
 
 const Landing = (props: Props) => {
+  useToFeedIfAuthenticated();
   return (
     <LandingWrapper>
       <Spacer />

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import SignUpForm from "./SignUpForm";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useToFeedIfAuthenticated } from "../../hooks/myCustomHooks";
 
 interface Props {}
 
@@ -20,16 +19,7 @@ const Spacer = styled.div(
 );
 
 const SignUp = (props: Props) => {
-  const history = useHistory();
-  const state = useSelector((state): any => state);
-  const auth = state.firebase.auth;
-  const isEmpty = auth.isEmpty;
-
-  //todo auth checker
-  useEffect(() => {
-    !isEmpty && history.push("/feed");
-  }, isEmpty);
-
+  useToFeedIfAuthenticated();
   return (
     <div>
       <Spacer />
