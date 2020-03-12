@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import styled, { css } from "styled-components";
 import { GetErrorMessage, getCurrentDate } from "../../../helpers/helpers";
@@ -9,7 +9,6 @@ import {
   useFirebaseConnect
 } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 interface Props {}
 
@@ -96,22 +95,13 @@ const ErrorMessage = styled.div(
   `
 );
 
+//todo I have to wait until the auth is loaded
+
 const SignUpForm = (props: Props) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const firebase = useFirebase();
   const firestore = useFirestore();
   const history = useHistory();
-  const state = useSelector((state): any => state);
-
-  //todo auth checker
-  useEffect(() => {
-    console.log("check auth");
-    const auth = state.firebase.auth;
-    console.log("isEmpty:", auth.isEmpty);
-    if (!auth.isEmpty) {
-      history.push("/feed");
-    }
-  }, []);
 
   const onSubmit = async (data: any) => {
     const { name, email, password } = data;
