@@ -10,6 +10,7 @@ import {
 } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import { IError, IInput } from "../../../@types/types";
+
 interface Props {}
 
 const StyledForm = styled.form(
@@ -87,83 +88,54 @@ const ErrorMessage = styled.div(
   `
 );
 
-const SignUpForm = (props: Props) => {
+const SignInForm = (props: Props) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const firebase = useFirebase();
   const firestore = useFirestore();
   const history = useHistory();
 
   const onSubmit = async (data: any) => {
-    const { name, email, password } = data;
+    const { email, password } = data;
+    //TODO sign in
     try {
-      const res = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-
-      const uid = res.user?.uid;
-      const doc = {
-        name,
-        email,
-        created_at: getCurrentDate()
-      };
-
-      await firestore
-        .collection("users")
-        .doc(uid)
-        .set(doc);
-
+      await firebase.auth().signInWithEmailAndPassword(email, password);
       history.push("/feed");
     } catch (error) {
-      alert("failed to sign up");
+      alert("failed to sign in");
     }
   };
-
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <StyledInput
-          type="text"
-          placeholder="username"
-          name="name"
-          ref={register({ required: true, min: 5, maxLength: 50 })}
-          error={errors.name ? true : false}
-        />
-        <ErrorMessageWrapper>
-          <ErrorMessage>
-            {errors.name && GetErrorMessage(errors.name as IInput, "Name")}
-          </ErrorMessage>
-        </ErrorMessageWrapper>
-        <StyledInput
-          type="text"
-          placeholder="e-mail"
-          name="email"
-          ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-          error={errors.email ? true : false}
-        />
-        <ErrorMessageWrapper>
-          <ErrorMessage>
-            {errors.email && GetErrorMessage(errors.email as IInput, "E-mail")}
-          </ErrorMessage>
-        </ErrorMessageWrapper>
-        <StyledInput
-          type="password"
-          name="password"
-          placeholder="password"
-          ref={register({ required: true, min: 5, maxLength: 30 })}
-          error={errors.password ? true : false}
-        />
-        <ErrorMessageWrapper>
-          <ErrorMessage>
-            {errors.password &&
-              GetErrorMessage(errors.password as IInput, "Password")}
-          </ErrorMessage>
-        </ErrorMessageWrapper>
-        <SubmitWrapper>
-          <SubmitInput type="submit" />
-        </SubmitWrapper>
-      </StyledForm>
-    </>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledInput
+        type="text"
+        placeholder="e-mail"
+        name="email"
+        ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+        error={errors.email ? true : false}
+      />
+      <ErrorMessageWrapper>
+        <ErrorMessage>
+          {errors.email && GetErrorMessage(errors.email as IInput, "E-mail")}
+        </ErrorMessage>
+      </ErrorMessageWrapper>
+      <StyledInput
+        type="password"
+        name="password"
+        placeholder="password"
+        ref={register({ required: true, min: 5, maxLength: 30 })}
+        error={errors.password ? true : false}
+      />
+      <ErrorMessageWrapper>
+        <ErrorMessage>
+          {errors.password &&
+            GetErrorMessage(errors.password as IInput, "Password")}
+        </ErrorMessage>
+      </ErrorMessageWrapper>
+      <SubmitWrapper>
+        <SubmitInput type="submit" />
+      </SubmitWrapper>
+    </StyledForm>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

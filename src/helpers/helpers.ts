@@ -1,5 +1,5 @@
+import { IInput } from './../@types/types';
 import dayjs from 'dayjs';
-import { IInput } from './../components/pages/signup/SignUpForm';
 export const GetErrorMessage = (input: IInput, name: string): string => {
   const type: string = input['type'];
   switch (type) {
