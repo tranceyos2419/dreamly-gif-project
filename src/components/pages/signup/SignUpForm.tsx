@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
+import dayjs from "dayjs";
 import styled, { css } from "styled-components";
-import { GetErrorMessage } from "../../../helpers/helpers";
+import { GetErrorMessage, getCurrentDate } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
 import { useFirebase, useFirestore } from "react-redux-firebase";
 
@@ -107,13 +108,11 @@ const SignUpForm = (props: Props) => {
       .createUserWithEmailAndPassword(email, password)
       .then((data): any => {
         const uid = data.user?.uid;
-        //todo coock time
-        const now = Date.now();
         //todo add data - firestgore
         const doc = {
           name,
           email,
-          created_at: now
+          created_at: getCurrentDate()
         };
         firestore
           .collection("users")
@@ -126,6 +125,7 @@ const SignUpForm = (props: Props) => {
       });
   };
 
+  //todo remove
   const logout = () => {
     firebase
       .auth()

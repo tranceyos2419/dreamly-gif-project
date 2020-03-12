@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { IInput } from './../components/pages/signup/SignUpForm';
 export const GetErrorMessage = (input: IInput, name: string): string => {
   const type: string = input['type'];
@@ -11,4 +12,9 @@ export const GetErrorMessage = (input: IInput, name: string): string => {
     default:
       return 'Error'
   }
+}
+
+
+export const getCurrentDate = (): string => {
+  return dayjs().toISOString();
 }
