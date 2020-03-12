@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 import { GetErrorMessage } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 
 interface Props {}
 
@@ -90,13 +91,47 @@ const ErrorMessage = styled.div(
 
 const SignUpForm = (props: Props) => {
   const { register, handleSubmit, errors, reset } = useForm();
+  const firebase = useFirebase();
+  const firestore = useFirestore();
+
+  //todo auth checker
+  useEffect(() => {
+    // firebase.auth;
+  }, []);
 
   const onSubmit = (data: any) => {
     const { name, email, password } = data;
 
-    console.log("data", data);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((data): any => {
+        const uid = data.user?.uid;
+        //todo coock time
+        const now = Date.now();
+        //todo add data - firestgore
+        const doc = {
+          name,
+          email,
+          created_at: now
+        };
+        firestore
+          .collection("users")
+          .doc(uid)
+          .set(doc)
+          .then(() => console.log(`${name} doc was creted`));
+      })
+      .catch(err => {
+        console.log("error", err);
+      });
   };
 
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => alert("you are signed out"));
+  };
   return (
     <>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
@@ -141,6 +176,7 @@ const SignUpForm = (props: Props) => {
           <SubmitInput type="submit" />
         </SubmitWrapper>
       </StyledForm>
+      <button onClick={() => logout()}>Logout</button>
     </>
   );
 };
