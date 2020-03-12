@@ -100,29 +100,27 @@ const SignUpForm = (props: Props) => {
     // firebase.auth;
   }, []);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const { name, email, password } = data;
+    try {
+      const res = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
 
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((data): any => {
-        const uid = data.user?.uid;
-        //todo add data - firestgore
-        const doc = {
-          name,
-          email,
-          created_at: getCurrentDate()
-        };
-        firestore
-          .collection("users")
-          .doc(uid)
-          .set(doc)
-          .then(() => console.log(`${name} doc was creted`));
-      })
-      .catch(err => {
-        console.log("error", err);
-      });
+      const uid = res.user?.uid;
+      const doc = {
+        name,
+        email,
+        created_at: getCurrentDate()
+      };
+
+      await firestore
+        .collection("users")
+        .doc(uid)
+        .set(doc);
+    } catch (error) {
+      alert("failed to sign up");
+    }
   };
 
   //todo remove
