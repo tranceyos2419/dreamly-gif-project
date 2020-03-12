@@ -1,6 +1,15 @@
 import React from "react";
 import Routes from "./routes/Routes";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
+import { isLoaded } from "react-redux-firebase";
+
+function AuthIsLoaded({ children }: { children: any }) {
+  const state = useSelector((state: any) => state);
+  const auth = state.firebase.auth;
+  if (!isLoaded(auth)) return <div />;
+  return children;
+}
 
 const RootWrapper = styled.div(
   ({ theme }) => css`
@@ -13,7 +22,9 @@ const RootWrapper = styled.div(
 function App() {
   return (
     <RootWrapper>
-      <Routes />
+      <AuthIsLoaded>
+        <Routes />
+      </AuthIsLoaded>
     </RootWrapper>
   );
 }
