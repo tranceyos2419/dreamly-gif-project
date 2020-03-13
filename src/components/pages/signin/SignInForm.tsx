@@ -96,7 +96,6 @@ const SignInForm = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     const { email, password } = data;
-    //TODO sign in
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
       history.push("/feed");

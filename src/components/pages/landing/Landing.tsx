@@ -5,11 +5,9 @@ import { Link } from "react-router-dom";
 import { useToFeedIfAuthenticated } from "../../hooks/myCustomHooks";
 interface Props {}
 
-//todo do I need padding?
 const LandingWrapper = styled.div(
   () => css`
     background: url(${background}) no-repeat center center fixed;
-    padding: 0em 1.2em;
     height: 1024px;
   `
 );
