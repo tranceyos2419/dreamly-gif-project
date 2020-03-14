@@ -98,7 +98,7 @@ const SignInForm = (props: Props) => {
     const { email, password } = data;
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      history.push("/feed");
+      history.push("/home");
     } catch (error) {
       alert("failed to sign in");
     }

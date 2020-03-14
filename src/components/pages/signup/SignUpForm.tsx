@@ -112,7 +112,7 @@ const SignUpForm = (props: Props) => {
         .doc(uid)
         .set(doc);
 
-      history.push("/feed");
+      history.push("/home");
     } catch (error) {
       alert("failed to sign up");
     }

@@ -9,7 +9,7 @@ export const useToFeedIfAuthenticated = () => {
   const isEmpty = auth.isEmpty;
 
   useEffect(() => {
-    !isEmpty && history.push("/feed");
+    !isEmpty && history.push("/home");
   }, isEmpty);
 }
 
