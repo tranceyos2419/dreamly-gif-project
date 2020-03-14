@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import User from "./User";
@@ -13,13 +13,18 @@ export interface IUser {
 const UserList = (props: Props) => {
   useFirestoreConnect({ collection: "users" });
   const state = useSelector((state: any) => state);
-  // const users = state.firestore.data.users as IUser[];
-  const users = state.firestore.data.users as Object;
-  // console.log("users:", users);
-  if (users !== null && users !== undefined) {
-    const values = Object.values(users);
-    console.log("values:", values);
+  const [users, setUsers] = useState(null);
+  let values: any;
+  const userObj = state.firestore.data.users as Object;
+
+  if (userObj !== null && userObj !== undefined) {
+    values = Object.values(userObj) as IUser[];
   }
+
+  useEffect(() => {
+    setUsers(values);
+  }, values);
+
   return (
     <div>
       <h2>User list</h2>
