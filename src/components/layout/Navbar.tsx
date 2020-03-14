@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import dreamlyIcon from "../../assets/images/Dreamly-icon.svg";
 import { useSelector } from "react-redux";
-import {
-  useFirebase,
-  useFirestoreConnect,
-  useFirestore
-} from "react-redux-firebase";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 import Gravatar from "react-gravatar";
 import logoutIcon from "../../assets/images/logout-icon.svg";
 import { useHistory } from "react-router-dom";
@@ -65,12 +61,10 @@ const LogoutIcon = styled.img(
   `
 );
 
-//todo error handling after clicking logout
 const Navbar = (props: Props) => {
   const state = useSelector((state: any) => state);
   const email = state.firebase.auth.email as string;
   const [username, setUsername] = useState("");
-  console.log("username:", username);
   const firestore = useFirestore();
   const firebase = useFirebase();
   const history = useHistory();
@@ -101,7 +95,6 @@ const Navbar = (props: Props) => {
         <StyledTitle>{username}</StyledTitle>
         <LogoutIcon src={logoutIcon} alt="logout" onClick={() => logout()} />
       </UserWrapper>
-      {/* <h3>Navbar</h3> */}
     </NavWrapper>
   );
 };
