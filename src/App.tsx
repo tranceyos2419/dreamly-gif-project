@@ -14,7 +14,6 @@ function AuthIsLoaded({ children }: { children: any }) {
 const RootWrapper = styled.div(
   ({ theme }) => css`
     text-align: center;
-    margin: auto;
     max-width: ${theme.range.screen.maxWidth};
   `
 );
