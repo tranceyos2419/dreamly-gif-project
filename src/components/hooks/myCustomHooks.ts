@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React, { useEffect } from "react";
 
-export const useToFeedIfAuthenticated = () => {
+export const useToHomeIfAuthenticated = () => {
   const history = useHistory();
   const state = useSelector((state): any => state);
   const auth = state.firebase.auth;

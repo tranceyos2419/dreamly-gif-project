@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import SignUpForm from "./SignUpForm";
 import styled, { css } from "styled-components";
-import { useToFeedIfAuthenticated } from "../../hooks/myCustomHooks";
+import { useToHomeIfAuthenticated } from "../../hooks/myCustomHooks";
 
 interface Props {}
 
@@ -19,7 +19,7 @@ const Spacer = styled.div(
 );
 
 const SignUp = (props: Props) => {
-  useToFeedIfAuthenticated();
+  useToHomeIfAuthenticated();
   return (
     <div>
       <Spacer />

@@ -4,7 +4,6 @@ import { useToLandingIfNotAuthenticated } from "../../hooks/myCustomHooks";
 
 interface Props {}
 
-//todo change the name of useToFeed
 const Home = (props: Props) => {
   useToLandingIfNotAuthenticated();
   return (

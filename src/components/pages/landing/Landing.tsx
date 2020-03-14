@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import background from "../../../assets/images/Landing-background.svg";
 import { Link } from "react-router-dom";
-import { useToFeedIfAuthenticated } from "../../hooks/myCustomHooks";
+import { useToHomeIfAuthenticated } from "../../hooks/myCustomHooks";
 interface Props {}
 
 const LandingWrapper = styled.div(
@@ -48,7 +48,7 @@ const StyledButton = styled.button(
 );
 
 const Landing = (props: Props) => {
-  useToFeedIfAuthenticated();
+  useToHomeIfAuthenticated();
   return (
     <LandingWrapper>
       <Spacer />
