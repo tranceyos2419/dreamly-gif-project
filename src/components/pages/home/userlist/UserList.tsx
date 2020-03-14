@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import User from "./User";
+import styled, { css } from "styled-components";
 
 interface Props {}
 
@@ -9,6 +10,23 @@ export interface IUser {
   email: string;
   name: string;
 }
+
+const UserListWrapper = styled.div(
+  ({ theme }) => css`
+    padding: 0.5em 0.2em;
+    background-color: ${theme.color.background.secondary};
+    width: 23%;
+    border-radius: ${theme.size.radius.regular};
+  `
+);
+
+const Title = styled.h5(
+  ({ theme }) => css`
+    font-size: ${theme.size.font.small};
+    font-weight: lighter;
+    margin-bottom: 0.4em;
+  `
+);
 
 const UserList = (props: Props) => {
   useFirestoreConnect({ collection: "users" });
@@ -21,14 +39,14 @@ const UserList = (props: Props) => {
   }
 
   return (
-    <div>
-      <h2>User list</h2>
+    <UserListWrapper>
+      <Title>Users</Title>
       {users &&
         users.map((user: IUser) => {
           const { name, email } = user;
           return <User name={name} email={email} />;
         })}
-    </div>
+    </UserListWrapper>
   );
 };
 

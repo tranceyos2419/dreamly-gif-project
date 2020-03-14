@@ -24,7 +24,11 @@ const theme = {
       large: '1.33em', // 48px (36px is regular)
       regular: '1rem',
       small: '0.66em', // 24px (36px is regular)
+      extraSmall: '0.4em',
       tiny: "0.33em"
+    },
+    radius: {
+      regular: '2px'
     }
   },
   range: {
