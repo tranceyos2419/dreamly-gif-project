@@ -32,10 +32,16 @@ const UserList = (props: Props) => {
   useFirestoreConnect({ collection: "users" });
   let users: IUser[] = [];
   const state = useSelector((state: any) => state);
+  const currentUserName = state.firebase.profile.name;
   const userObj = state.firestore.data.users as Object;
 
-  if (userObj !== null && userObj !== undefined) {
+  if (
+    userObj !== null &&
+    userObj !== undefined &&
+    currentUserName !== undefined
+  ) {
     users = Object.values(userObj) as IUser[];
+    users = users.filter(user => user.name !== currentUserName);
   }
 
   return (
