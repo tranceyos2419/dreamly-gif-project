@@ -13,7 +13,6 @@ import { useHistory } from "react-router-dom";
 
 interface Props {}
 
-//todo fill out space when I expanded it
 const NavWrapper = styled.div(
   ({ theme }) => css`
     background-color: ${theme.color.background.navigation};
