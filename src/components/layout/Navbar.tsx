@@ -75,21 +75,22 @@ const Navbar = (props: Props) => {
   const firebase = useFirebase();
   const history = useHistory();
 
-  useEffect(() => {
-    firestore
+  const getUserName = async () => {
+    const res = await firestore
       .collection("users")
       .where("email", "==", email)
-      .get()
-      .then(doc => {
-        setUsername(doc.docs[0].data()["name"]);
-      });
+      .get();
+    const name = res.docs[0].data()["name"];
+    setUsername(name);
+  };
+
+  useEffect(() => {
+    getUserName();
   }, []);
 
-  const logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => history.push("/"));
+  const logout = async () => {
+    await firebase.auth().signOut();
+    history.push("/");
   };
 
   return (
