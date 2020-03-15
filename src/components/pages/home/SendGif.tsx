@@ -34,7 +34,7 @@ const StyledInput = styled.input<IError>(
   ({ theme, error }) => css`
     padding: 0.3em 0.1em;
     margin-top: 3em;
-    margin-bottom: 1em;
+    /* margin-bottom: 1em; */
     box-sizing: border-box;
     background: transparent;
     border: none;
@@ -83,9 +83,9 @@ const SubmitInput = styled.input(
 const ErrorMessageWrapper = styled.div(
   ({ theme }) => css`
     margin: auto;
-    display: flex;
-    justify-content: flex-start;
-    width: 50%;
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    /* width: 50%; */
   `
 );
 
