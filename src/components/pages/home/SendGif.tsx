@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
 import { IError, IInput } from "../../../@types/types";
@@ -55,6 +55,32 @@ const StyledInput = styled.input<IError>(
   `
 );
 
+const ErrorMessageWrapper = styled.div(
+  ({ theme }) => css`
+    margin: auto;
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    /* width: 50%; */
+  `
+);
+
+const ErrorMessage = styled.div(
+  ({ theme }) => css`
+    font-size: ${theme.size.font.tiny};
+    color: ${theme.color.font.error};
+  `
+);
+
+const StyledLabel = styled.label(
+  ({ theme }) => css`
+    cursor: pointer;
+    font-size: ${theme.size.font.small};
+    &:hover {
+      color: ${theme.color.button.background};
+    }
+  `
+);
+
 const SubmitWrapper = styled.div(
   ({ theme }) => css`
     /* display: flex; */
@@ -80,26 +106,21 @@ const SubmitInput = styled.input(
   `
 );
 
-const ErrorMessageWrapper = styled.div(
-  ({ theme }) => css`
-    margin: auto;
-    /* display: flex; */
-    /* justify-content: flex-start; */
-    /* width: 50%; */
-  `
-);
-
-const ErrorMessage = styled.div(
-  ({ theme }) => css`
-    font-size: ${theme.size.font.tiny};
-    color: ${theme.color.font.error};
-  `
-);
-
 //todo add a pattern to input to restrict the form of user-input
 //todo change name to names
 const SendGif = (props: Props) => {
+  const [gif, setGif] = useState(null);
   const { register, handleSubmit, errors, reset } = useForm();
+
+  const handleImageUpload = (e: any) => {
+    if (e !== null && e !== undefined) {
+      const [file] = e.target?.files;
+      if (file) {
+        setGif(file);
+        console.log(file);
+      }
+    }
+  };
 
   const onSubmit = async (data: any) => {
     const { name } = data;
@@ -110,6 +131,7 @@ const SendGif = (props: Props) => {
     }
   };
 
+  //todo test save data to the storage
   return (
     <SendGifWrapper>
       <Title>Send a Gif</Title>
@@ -126,6 +148,17 @@ const SendGif = (props: Props) => {
             {errors.name && GetErrorMessage(errors.name as IInput, "Name")}
           </ErrorMessage>
         </ErrorMessageWrapper>
+        <StyledLabel htmlFor="gif">
+          {gif !== null ? gif.name : "Choose a gif"}
+        </StyledLabel>
+        <input
+          id="gif"
+          type="file"
+          accept="image/gif"
+          multiple={false}
+          style={{ display: "none" }}
+          onChange={e => handleImageUpload(e)}
+        />
         <SubmitWrapper>
           <SubmitInput type="submit" />
         </SubmitWrapper>
