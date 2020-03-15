@@ -1,5 +1,4 @@
 import React from "react";
-import dayjs from "dayjs";
 import styled, { css } from "styled-components";
 import { GetErrorMessage, getCurrentDate } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
