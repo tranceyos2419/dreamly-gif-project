@@ -32,10 +32,9 @@ const StyledForm = styled.form(
 
 const StyledInput = styled.input<IError>(
   ({ theme, error }) => css`
-    padding: 1em 0.2em;
+    padding: 0.3em 0.1em;
     margin-top: 3em;
     margin-bottom: 1em;
-    width: 50%;
     box-sizing: border-box;
     background: transparent;
     border: none;
