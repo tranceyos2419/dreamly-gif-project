@@ -3,6 +3,7 @@ import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import User from "./User";
 import styled, { css } from "styled-components";
+import { getValueOfObject } from "../../../../helpers/helpers";
 
 interface Props {}
 
@@ -34,15 +35,8 @@ const UserList = (props: Props) => {
   const state = useSelector((state: any) => state);
   const currentUserName = state.firebase.profile.name;
   const userObj = state.firestore.data.users as Object;
-
-  if (
-    userObj !== null &&
-    userObj !== undefined &&
-    currentUserName !== undefined
-  ) {
-    users = Object.values(userObj) as IUser[];
-    users = users.filter(user => user.name !== currentUserName);
-  }
+  users = getValueOfObject<IUser>(userObj);
+  users = users && users.filter(user => user.name !== currentUserName);
 
   return (
     <UserListWrapper>

@@ -18,3 +18,9 @@ export const GetErrorMessage = (input: IInput, name: string): string => {
 export const getCurrentDate = (): string => {
   return dayjs().toISOString();
 }
+
+export function getValueOfObject<T>(obj: Object): T[] {
+  if (obj !== null && obj !== undefined) {
+    return Object.values(obj) as T[];
+  }
+}

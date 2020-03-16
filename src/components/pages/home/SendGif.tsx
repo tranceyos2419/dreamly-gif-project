@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
 import { IError, IInput } from "../../../@types/types";
-import { GetErrorMessage } from "../../../helpers/helpers";
+import { GetErrorMessage, getValueOfObject } from "../../../helpers/helpers";
 import { useFirebase } from "react-redux-firebase";
+import { useSelector } from "react-redux";
+import { IUser } from "./userlist/UserList";
 
 interface Props {}
 
@@ -83,6 +85,14 @@ const SendGif = (props: Props) => {
   const firebase = useFirebase();
   const { register, handleSubmit, errors, reset } = useForm();
 
+  let users: IUser[] = [];
+  const state = useSelector((state: any) => state);
+  const currentUserName = state.firebase.profile.name;
+  const userObj = state.firestore.data.users as Object;
+  users = getValueOfObject<IUser>(userObj);
+  users = users && users.filter(user => user.name !== currentUserName);
+  const userNames = users && users.map(user => user.name);
+
   const handleImageChange = (e: any) => {
     if (e !== null && e !== undefined) {
       const [file] = e.target?.files;
@@ -107,7 +117,10 @@ const SendGif = (props: Props) => {
   const onSubmit = async (data: any) => {
     const { names, gif }: { names: string; gif: File[] } = data;
     const sanitiledNames = getArrayOfSanitizedNames(names);
-    console.log("sanitiledNames:", sanitiledNames);
+    //* validation
+    const isAllNamesAreUserNames = sanitiledNames.every(r =>
+      userNames.includes(r)
+    );
 
     try {
       console.log("name", gif[0]);
@@ -116,7 +129,6 @@ const SendGif = (props: Props) => {
     }
   };
 
-  //todo validate there is a user who is corresponsing to the input
   //todo intergrate it to firebase
   return (
     <SendGifWrapper>
