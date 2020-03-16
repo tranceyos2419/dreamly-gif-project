@@ -20,14 +20,6 @@ const Title = styled.h5(
   ({ theme }) => css`
     font-size: ${theme.size.font.small};
     font-weight: lighter;
-    margin-bottom: 0.4em;
-  `
-);
-
-const StyledForm = styled.form(
-  () => css`
-    /* padding: 0em 0.5em; */
-    /* margin: auto; */
   `
 );
 
@@ -54,15 +46,6 @@ const StyledInput = styled.input<IError>(
   `
 );
 
-const ErrorMessageWrapper = styled.div(
-  ({ theme }) => css`
-    margin: auto;
-    /* display: flex; */
-    /* justify-content: flex-start; */
-    /* width: 50%; */
-  `
-);
-
 const ErrorMessage = styled.div(
   ({ theme }) => css`
     font-size: ${theme.size.font.tiny};
@@ -77,16 +60,6 @@ const StyledLabel = styled.label(
     &:hover {
       color: ${theme.color.button.background};
     }
-  `
-);
-
-const SubmitWrapper = styled.div(
-  ({ theme }) => css`
-    /* display: flex; */
-    /* justify-content: flex-end; */
-    /* width: 50%; */
-    /* margin: auto; */
-    /* margin-top: 0.5em; */
   `
 );
 
@@ -139,7 +112,7 @@ const SendGif = (props: Props) => {
   return (
     <SendGifWrapper>
       <Title>Send a Gif</Title>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <StyledInput
           type="text"
           placeholder="@username,@username,..."
@@ -151,11 +124,9 @@ const SendGif = (props: Props) => {
           })}
           error={errors.names ? true : false}
         />
-        <ErrorMessageWrapper>
-          <ErrorMessage>
-            {errors.names && GetErrorMessage(errors.names as IInput, "Name")}
-          </ErrorMessage>
-        </ErrorMessageWrapper>
+        <ErrorMessage>
+          {errors.names && GetErrorMessage(errors.names as IInput, "Name")}
+        </ErrorMessage>
         <StyledLabel htmlFor="gif">
           {gif !== null ? gif.name : "Choose a gif"}
         </StyledLabel>
@@ -169,15 +140,11 @@ const SendGif = (props: Props) => {
           onChange={e => handleImageChange(e)}
           ref={register({ required: true })}
         />
-        <ErrorMessageWrapper>
-          <ErrorMessage>
-            {errors.gif && GetErrorMessage(errors.gif as IInput, "Gif")}
-          </ErrorMessage>
-        </ErrorMessageWrapper>
-        <SubmitWrapper>
-          <SubmitInput type="submit" />
-        </SubmitWrapper>
-      </StyledForm>
+        <ErrorMessage>
+          {errors.gif && GetErrorMessage(errors.gif as IInput, "Gif")}
+        </ErrorMessage>
+        <SubmitInput type="submit" />
+      </form>
     </SendGifWrapper>
   );
 };
