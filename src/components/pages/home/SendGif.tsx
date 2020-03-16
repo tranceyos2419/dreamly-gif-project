@@ -34,11 +34,9 @@ const StyledForm = styled.form(
 const StyledInput = styled.input<IError>(
   ({ theme, error }) => css`
     padding: 0.3em 0.1em;
-    margin-top: 3em;
-    /* margin-bottom: 1em; */
-    box-sizing: border-box;
     background: transparent;
     border: none;
+    width: 75%;
     border-bottom: ${error
       ? `1.5px solid ${theme.color.font.error} `
       : `1.5px solid ${theme.color.font.primary}`};
@@ -126,16 +124,17 @@ const SendGif = (props: Props) => {
   };
 
   const onSubmit = async (data: any) => {
-    const { name, gif } = data;
+    const { names, gif } = data;
     try {
+      console.log("names:", names);
       console.log("name", gif[0]);
     } catch (error) {
       alert("failed to sign up");
     }
   };
 
-  //todo add a pattern to input to restrict the form of user-input
-  //todo change name to names
+  //todo sanetize names
+  //todo validate there is a user who is corresponsing to the input
   //todo intergrate it to firebase
   return (
     <SendGifWrapper>
@@ -143,19 +142,18 @@ const SendGif = (props: Props) => {
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <StyledInput
           type="text"
-          placeholder="username"
-          name="name"
+          placeholder="@username,@username,..."
+          name="names"
           ref={register({
             required: true,
             min: 5,
-            maxLength: 50,
             pattern: /^@+\S+,+$/i
           })}
-          error={errors.name ? true : false}
+          error={errors.names ? true : false}
         />
         <ErrorMessageWrapper>
           <ErrorMessage>
-            {errors.name && GetErrorMessage(errors.name as IInput, "Name")}
+            {errors.names && GetErrorMessage(errors.names as IInput, "Name")}
           </ErrorMessage>
         </ErrorMessageWrapper>
         <StyledLabel htmlFor="gif">
