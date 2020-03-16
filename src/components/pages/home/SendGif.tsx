@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
 import { IError, IInput } from "../../../@types/types";
 import { GetErrorMessage } from "../../../helpers/helpers";
+import { useFirebase } from "react-redux-firebase";
 
 interface Props {}
 
@@ -110,6 +111,7 @@ const SubmitInput = styled.input(
 //todo change name to names
 const SendGif = (props: Props) => {
   const [gif, setGif] = useState(null);
+  const firebase = useFirebase();
   const { register, handleSubmit, errors, reset } = useForm();
 
   const handleImageUpload = (e: any) => {
@@ -117,6 +119,9 @@ const SendGif = (props: Props) => {
       const [file] = e.target?.files;
       if (file) {
         setGif(file);
+        // firebase.uploadFile("/image", file).then((value: any) => {
+        //   console.log("file was upload", value);
+        // });
         console.log(file);
       }
     }
@@ -131,7 +136,7 @@ const SendGif = (props: Props) => {
     }
   };
 
-  //todo test save data to the storage
+  //todo link input/file to react-hook-form
   return (
     <SendGifWrapper>
       <Title>Send a Gif</Title>
