@@ -96,17 +96,26 @@ const SendGif = (props: Props) => {
     }
   };
 
+  const getArrayOfSanitizedNames = (names: string): string[] => {
+    const namesArray = names.split(",");
+    namesArray.pop();
+    return namesArray.map((name: string) => {
+      return name.substr(1);
+    });
+  };
+
   const onSubmit = async (data: any) => {
-    const { names, gif } = data;
+    const { names, gif }: { names: string; gif: File[] } = data;
+    const sanitiledNames = getArrayOfSanitizedNames(names);
+    console.log("sanitiledNames:", sanitiledNames);
+
     try {
-      console.log("names:", names);
       console.log("name", gif[0]);
     } catch (error) {
       alert("failed to sign up");
     }
   };
 
-  //todo sanetize names
   //todo validate there is a user who is corresponsing to the input
   //todo intergrate it to firebase
   return (
