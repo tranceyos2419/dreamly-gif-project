@@ -2,10 +2,29 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
 import { IError, IInput } from "../../../@types/types";
-import { GetErrorMessage, getValueOfObject } from "../../../helpers/helpers";
-import { useFirebase } from "react-redux-firebase";
+import {
+  GetErrorMessage,
+  getValueOfObject,
+  getCurrentDate
+} from "../../../helpers/helpers";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { IUser } from "./userlist/UserList";
+
+interface IPost {
+  imgUrl: string;
+  created_by: string;
+  created_at: string;
+  like: string[];
+  sent: string[];
+  waittingAnswer: string[];
+  comments: Comment[];
+}
+
+interface Comment {
+  user: string;
+  comment: string;
+}
 
 interface Props {}
 
@@ -82,27 +101,31 @@ const SubmitInput = styled.input(
 
 const SendGif = (props: Props) => {
   const [gif, setGif] = useState(null);
+  console.log("gif:", gif);
   const firebase = useFirebase();
+  const firestore = useFirestore();
   const { register, handleSubmit, errors, reset } = useForm();
 
   let users: IUser[] = [];
   const state = useSelector((state: any) => state);
+  const currentUserUid = state.firebase.auth.uid;
   const currentUserName = state.firebase.profile.name;
   const userObj = state.firestore.data.users as Object;
+
   users = getValueOfObject<IUser>(userObj);
   users = users && users.filter(user => user.name !== currentUserName);
   const userNames = users && users.map(user => user.name);
 
-  const handleImageChange = (e: any) => {
-    if (e !== null && e !== undefined) {
-      const [file] = e.target?.files;
-      if (file) {
+  const storageRef = firebase.storage().ref();
+
+  const handleImageChange = async (e: any) => {
+    try {
+      if (e !== null && e !== undefined) {
+        const [file] = e.target?.files;
         setGif(file);
-        // firebase.uploadFile("/image", file).then((value: any) => {
-        //   console.log("file was upload", value);
-        // });
-        console.log(file);
       }
+    } catch (error) {
+      console.log("error:", error);
     }
   };
 
@@ -114,22 +137,65 @@ const SendGif = (props: Props) => {
     });
   };
 
+  const getUidsFromNames = (
+    names: string[],
+    objArray: [string, any][]
+  ): string[] => {
+    const uids = names.map(name => {
+      let uid = "";
+      objArray.forEach(([key, value]) => {
+        const objName = value.name as string;
+        if (objName == name) {
+          uid = key;
+        }
+      });
+      return uid;
+    });
+    return uids;
+  };
+
   const onSubmit = async (data: any) => {
     const { names, gif }: { names: string; gif: File[] } = data;
     const sanitiledNames = getArrayOfSanitizedNames(names);
+    const objArray = userObj && Object.entries(userObj);
+
     //* validation
     const isAllNamesAreUserNames = sanitiledNames.every(r =>
       userNames.includes(r)
     );
 
     try {
+      if (isAllNamesAreUserNames) {
+        //# uid of sent users
+        const uids = getUidsFromNames(sanitiledNames, objArray);
+
+        //# saving image to storage and get the url
+        const imageRef = storageRef.child(`images/${gif[0].name}`);
+        await imageRef.put(gif[0]);
+        const imgUrl = await imageRef.getDownloadURL();
+
+        //todo create data;
+        const post: IPost = {
+          imgUrl,
+          created_by: currentUserUid,
+          created_at: getCurrentDate(),
+          like: [],
+          sent: uids,
+          waittingAnswer: uids,
+          comments: []
+        };
+
+        const res = await firestore.collection("posts").add(post);
+        console.log("res:", res);
+      } else {
+        alert("usernames are incorrect");
+      }
       console.log("name", gif[0]);
     } catch (error) {
       alert("failed to sign up");
     }
   };
 
-  //todo intergrate it to firebase
   return (
     <SendGifWrapper>
       <Title>Send a Gif</Title>

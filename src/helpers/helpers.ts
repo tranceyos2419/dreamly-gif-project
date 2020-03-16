@@ -24,3 +24,8 @@ export function getValueOfObject<T>(obj: Object): T[] {
     return Object.values(obj) as T[];
   }
 }
+export function getKeysfObject(obj: Object): string[] {
+  if (obj !== null && obj !== undefined) {
+    return Object.keys(obj);
+  }
+}
