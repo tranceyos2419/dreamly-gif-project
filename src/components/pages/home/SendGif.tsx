@@ -107,14 +107,12 @@ const SubmitInput = styled.input(
   `
 );
 
-//todo add a pattern to input to restrict the form of user-input
-//todo change name to names
 const SendGif = (props: Props) => {
   const [gif, setGif] = useState(null);
   const firebase = useFirebase();
   const { register, handleSubmit, errors, reset } = useForm();
 
-  const handleImageUpload = (e: any) => {
+  const handleImageChange = (e: any) => {
     if (e !== null && e !== undefined) {
       const [file] = e.target?.files;
       if (file) {
@@ -128,15 +126,17 @@ const SendGif = (props: Props) => {
   };
 
   const onSubmit = async (data: any) => {
-    const { name } = data;
+    const { name, gif } = data;
     try {
-      console.log("name", name);
+      console.log("name", gif[0]);
     } catch (error) {
       alert("failed to sign up");
     }
   };
 
-  //todo link input/file to react-hook-form
+  //todo add a pattern to input to restrict the form of user-input
+  //todo change name to names
+  //todo intergrate it to firebase
   return (
     <SendGifWrapper>
       <Title>Send a Gif</Title>
@@ -158,12 +158,19 @@ const SendGif = (props: Props) => {
         </StyledLabel>
         <input
           id="gif"
+          name="gif"
           type="file"
           accept="image/gif"
           multiple={false}
           style={{ display: "none" }}
-          onChange={e => handleImageUpload(e)}
+          onChange={e => handleImageChange(e)}
+          ref={register({ required: true })}
         />
+        <ErrorMessageWrapper>
+          <ErrorMessage>
+            {errors.gif && GetErrorMessage(errors.gif as IInput, "Gif")}
+          </ErrorMessage>
+        </ErrorMessageWrapper>
         <SubmitWrapper>
           <SubmitInput type="submit" />
         </SubmitWrapper>
