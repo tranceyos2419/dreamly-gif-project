@@ -145,7 +145,12 @@ const SendGif = (props: Props) => {
           type="text"
           placeholder="username"
           name="name"
-          ref={register({ required: true, min: 5, maxLength: 50 })}
+          ref={register({
+            required: true,
+            min: 5,
+            maxLength: 50,
+            pattern: /^@+\S+,+$/i
+          })}
           error={errors.name ? true : false}
         />
         <ErrorMessageWrapper>
