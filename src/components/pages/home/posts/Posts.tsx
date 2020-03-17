@@ -38,7 +38,6 @@ const Posts = (props: Props) => {
             />
           );
         })}
-      <h2>Posts</h2>
     </PostsWrapper>
   );
 };

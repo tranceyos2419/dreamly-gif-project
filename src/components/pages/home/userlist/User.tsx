@@ -4,13 +4,16 @@ import Gravatar from "react-gravatar";
 import styled, { css } from "styled-components";
 import { IUser } from "../../../../@types/types";
 
+//todo make User.tsx global
+//todo pass the value of margin as props
+//todo margin-bottom too
 interface Props extends IUser {}
 
 const UserWrapper = styled.div(
   ({ theme }) => css`
     display: flex;
     align-items: center;
-    margin: 0em 0.4em;
+    /* margin: 0em 0.4em; */
     margin-bottom: 0.5em;
     background-color: #fff;
     border-radius: ${theme.size.radius.regular};
