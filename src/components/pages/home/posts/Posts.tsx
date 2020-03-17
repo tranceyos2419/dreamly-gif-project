@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { IPost } from "../../../../@types/types";
+
 import Post from "./Post";
 
 interface Props {}
@@ -15,6 +16,8 @@ const PostsWrapper = styled.div(
     /* border-radius: ${theme.size.radius.regular}; */
   `
 );
+
+//todo display descendently accroding to created_at (especially when user add a gif)
 
 const Posts = (props: Props) => {
   useFirestoreConnect({ collection: "posts" });

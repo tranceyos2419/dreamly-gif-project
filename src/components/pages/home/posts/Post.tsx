@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { IComment } from "../../../../@types/types";
 import { firestore } from "firebase";
@@ -15,6 +17,7 @@ interface Props {
 const PostWrapper = styled.div(
   ({ theme }) => css`
     background-color: ${theme.color.background.secondary};
+    margin-bottom: 1em;
   `
 );
 
@@ -26,11 +29,30 @@ const StyledImg = styled.img(
 
 const ActionBar = styled.div(
   ({ theme }) => css`
+    background-color: #fff;
     display: flex;
     justify-content: space-between;
+    padding: 0.2em 0.4em;
   `
 );
 
+const StyledIcon = styled(FontAwesomeIcon)(
+  () => css`
+    color: #000;
+    cursor: pointer;
+  `
+);
+
+const StyledLetter = styled.p(
+  ({ theme }) => css`
+    color: #000;
+    font-size: ${theme.size.font.small};
+    cursor: pointer;
+  `
+);
+
+//todo toggle like
+//todo toggle comment
 const Post = (props: Props) => {
   const [creator, setcreator] = useState({ name: "", email: "" });
   console.log("creator:", creator);
@@ -53,12 +75,11 @@ const Post = (props: Props) => {
 
   return (
     <PostWrapper>
-      <h5>Post</h5>
       <User name={creator.name} email={creator.email} />
       <StyledImg src={imgUrl} alt="gif" />
       <ActionBar>
-        <p>Heart</p>
-        <p>Comment</p>
+        <StyledIcon icon={faHeart} />
+        <StyledLetter>Comment</StyledLetter>
       </ActionBar>
     </PostWrapper>
   );
