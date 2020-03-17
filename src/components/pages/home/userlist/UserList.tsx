@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
-import User from "./User";
+import User from "../../../global/User";
 import styled, { css } from "styled-components";
 import { getValueOfObject } from "../../../../helpers/helpers";
 import { IUser } from "../../../../@types/types";
@@ -40,7 +40,14 @@ const UserList = (props: Props) => {
       {users &&
         users.map((user: IUser) => {
           const { name, email } = user;
-          return <User name={name} email={email} />;
+          return (
+            <User
+              name={name}
+              email={email}
+              margin="0em 0.4em"
+              marginBottom="0.5em"
+            />
+          );
         })}
     </UserListWrapper>
   );

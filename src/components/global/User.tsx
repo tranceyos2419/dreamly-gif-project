@@ -2,19 +2,24 @@ import React from "react";
 
 import Gravatar from "react-gravatar";
 import styled, { css } from "styled-components";
-import { IUser } from "../../../../@types/types";
+import { IUser } from "../../@types/types";
 
 //todo make User.tsx global
 //todo pass the value of margin as props
 //todo margin-bottom too
-interface Props extends IUser {}
+interface Props extends IUser, Style {}
 
-const UserWrapper = styled.div(
-  ({ theme }) => css`
+interface Style {
+  margin: string;
+  marginBottom: string;
+}
+
+const UserWrapper = styled.div<Style>(
+  ({ theme, margin, marginBottom }) => css`
     display: flex;
     align-items: center;
-    /* margin: 0em 0.4em; */
-    margin-bottom: 0.5em;
+    margin: ${margin};
+    margin-bottom: ${marginBottom};
     background-color: #fff;
     border-radius: ${theme.size.radius.regular};
   `
@@ -39,9 +44,9 @@ const UserName = styled.p(
 );
 
 const User = (props: Props) => {
-  const { email, name } = props;
+  const { email, name, margin, marginBottom } = props;
   return (
-    <UserWrapper>
+    <UserWrapper margin={margin} marginBottom={marginBottom}>
       <StyledGravatar email={email} />
       <UserName>{name} </UserName>
     </UserWrapper>

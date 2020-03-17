@@ -5,7 +5,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { IComment } from "../../../../@types/types";
 import { firestore } from "firebase";
-import User from "../userlist/User";
+import User from "../../../global/User";
 interface Props {
   uid: string;
   imgUrl: string;
@@ -24,6 +24,7 @@ const PostWrapper = styled.div(
 const StyledImg = styled.img(
   () => css`
     width: 100%;
+    /* height: 80%; */
   `
 );
 
@@ -75,7 +76,12 @@ const Post = (props: Props) => {
 
   return (
     <PostWrapper>
-      <User name={creator.name} email={creator.email} />
+      <User
+        name={creator.name}
+        email={creator.email}
+        marginBottom="0em"
+        margin="0em"
+      />
       <StyledImg src={imgUrl} alt="gif" />
       <ActionBar>
         <StyledIcon icon={faHeart} />
