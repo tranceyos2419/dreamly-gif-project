@@ -24,7 +24,7 @@ const PostWrapper = styled.div(
 const StyledImg = styled.img(
   () => css`
     width: 100%;
-    /* height: 80%; */
+    display: block;
   `
 );
 
