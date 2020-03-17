@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
-import { IError, IInput } from "../../../@types/types";
+import { IError, IInput, IUser, IPost } from "../../../@types/types";
 import {
   GetErrorMessage,
   getValueOfObject,
@@ -9,22 +9,6 @@ import {
 } from "../../../helpers/helpers";
 import { useFirebase, useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
-import { IUser } from "./userlist/UserList";
-
-interface IPost {
-  imgUrl: string;
-  created_by: string;
-  created_at: string;
-  like: string[];
-  sent: string[];
-  waittingAnswer: string[];
-  comments: Comment[];
-}
-
-interface Comment {
-  user: string;
-  comment: string;
-}
 
 interface Props {}
 
@@ -101,7 +85,6 @@ const SubmitInput = styled.input(
 
 const SendGif = (props: Props) => {
   const [gif, setGif] = useState(null);
-  console.log("gif:", gif);
   const firebase = useFirebase();
   const firestore = useFirestore();
   const { register, handleSubmit, errors, reset } = useForm();
@@ -179,7 +162,7 @@ const SendGif = (props: Props) => {
           imgUrl,
           created_by: currentUserUid,
           created_at: getCurrentDate(),
-          like: [],
+          likes: [],
           sent: uids,
           waittingAnswer: uids,
           comments: []

@@ -4,13 +4,9 @@ import { useSelector } from "react-redux";
 import User from "./User";
 import styled, { css } from "styled-components";
 import { getValueOfObject } from "../../../../helpers/helpers";
+import { IUser } from "../../../../@types/types";
 
 interface Props {}
-
-export interface IUser {
-  email: string;
-  name: string;
-}
 
 const UserListWrapper = styled.div(
   ({ theme }) => css`

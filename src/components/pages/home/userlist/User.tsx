@@ -1,8 +1,8 @@
 import React from "react";
 
 import Gravatar from "react-gravatar";
-import { IUser } from "./UserList";
 import styled, { css } from "styled-components";
+import { IUser } from "../../../../@types/types";
 
 interface Props extends IUser {}
 
