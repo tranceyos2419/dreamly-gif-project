@@ -7,7 +7,11 @@ import {
   getValueOfObject,
   getCurrentDate
 } from "../../../helpers/helpers";
-import { useFirebase, useFirestore } from "react-redux-firebase";
+import {
+  useFirebase,
+  useFirestore,
+  useFirestoreConnect
+} from "react-redux-firebase";
 import { useSelector } from "react-redux";
 
 interface Props {}
@@ -111,6 +115,7 @@ const getUidsFromNames = (
 const SendGif = (props: Props) => {
   const [names, setNames] = useState("");
   const [gif, setGif] = useState(null);
+  useFirestoreConnect({ collection: "users" });
   const firebase = useFirebase();
   const firestore = useFirestore();
   const storageRef = firebase.storage().ref();
