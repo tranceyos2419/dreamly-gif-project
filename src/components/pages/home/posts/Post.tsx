@@ -39,9 +39,12 @@ const ActionBar = styled.div(
   `
 );
 
-const StyledIcon = styled(FontAwesomeIcon)(
-  () => css`
-    color: #000;
+interface WasUserLiked {
+  wasUserLiked: boolean;
+}
+const StyledIcon = styled(FontAwesomeIcon)<WasUserLiked>(
+  ({ wasUserLiked }) => css`
+    color: ${wasUserLiked ? "red" : "#000"};
     cursor: pointer;
   `
 );
@@ -54,9 +57,6 @@ const StyledLetter = styled.p(
   `
 );
 
-//todo toggle like
-//todo add like
-//todo change like view
 //todo toggle comment
 const Post = (props: Props) => {
   const [creator, setcreator] = useState({ name: "", email: "" });
@@ -107,7 +107,11 @@ const Post = (props: Props) => {
       />
       <StyledImg src={imgUrl} alt="gif" />
       <ActionBar>
-        <StyledIcon icon={faHeart} onClick={() => handleLike()} />
+        <StyledIcon
+          wasUserLiked={wasUserLiked}
+          icon={faHeart}
+          onClick={() => handleLike()}
+        />
         <StyledLetter>Comment</StyledLetter>
       </ActionBar>
     </PostWrapper>
