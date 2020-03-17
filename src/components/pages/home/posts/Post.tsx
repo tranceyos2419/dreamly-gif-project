@@ -6,6 +6,8 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { IComment } from "../../../../@types/types";
 import { firestore } from "firebase";
 import User from "../../../global/User";
+import { useFirestore } from "react-redux-firebase";
+import { useSelector } from "react-redux";
 interface Props {
   uid: string;
   imgUrl: string;
@@ -53,12 +55,15 @@ const StyledLetter = styled.p(
 );
 
 //todo toggle like
+//todo add like
+//todo change like view
 //todo toggle comment
 const Post = (props: Props) => {
   const [creator, setcreator] = useState({ name: "", email: "" });
-  console.log("creator:", creator);
   const { uid, created_by, imgUrl, likes, comments } = props;
-  console.log("created_by:", created_by);
+  const state = useSelector((state: any) => state);
+  const currentUserUid = state.firebase.auth.uid;
+  const wasUserLiked = likes.some(uid => uid === currentUserUid);
 
   const getcreator = async () => {
     const res = await firestore()
@@ -74,6 +79,24 @@ const Post = (props: Props) => {
     getcreator();
   }, []);
 
+  const handleLike = async () => {
+    try {
+      let newLikes = [];
+      if (wasUserLiked) {
+        newLikes = likes.filter(id => id !== currentUserUid);
+      } else {
+        newLikes = Object.assign([], likes);
+        newLikes.push(currentUserUid);
+      }
+      await firestore()
+        .collection("posts")
+        .doc(uid)
+        .update({ likes: newLikes });
+    } catch (error) {
+      console.log("error:", error);
+    }
+  };
+
   return (
     <PostWrapper>
       <User
@@ -84,7 +107,7 @@ const Post = (props: Props) => {
       />
       <StyledImg src={imgUrl} alt="gif" />
       <ActionBar>
-        <StyledIcon icon={faHeart} />
+        <StyledIcon icon={faHeart} onClick={() => handleLike()} />
         <StyledLetter>Comment</StyledLetter>
       </ActionBar>
     </PostWrapper>
