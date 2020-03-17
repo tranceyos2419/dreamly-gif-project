@@ -22,6 +22,7 @@ const SendGifWrapper = styled.div(
     background-color: ${theme.color.background.secondary};
     width: 23%; //!fixed
     border-radius: ${theme.size.radius.regular};
+    height: 30%; //!fixed
   `
 );
 

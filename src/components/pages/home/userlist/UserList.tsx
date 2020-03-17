@@ -14,6 +14,7 @@ const UserListWrapper = styled.div(
     background-color: ${theme.color.background.secondary};
     width: 23%;
     border-radius: ${theme.size.radius.regular};
+    height: 30%; //!fixed
   `
 );
 
