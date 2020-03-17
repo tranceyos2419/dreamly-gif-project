@@ -83,23 +83,48 @@ const SubmitInput = styled.input(
   `
 );
 
+const getArrayOfSanitizedNames = (names: string): string[] => {
+  const namesArray = names.split(",");
+  namesArray.pop();
+  return namesArray.map((name: string) => {
+    return name.substr(1);
+  });
+};
+
+const getUidsFromNames = (
+  names: string[],
+  objArray: [string, any][]
+): string[] => {
+  const uids = names.map(name => {
+    let uid = "";
+    objArray.forEach(([key, value]) => {
+      const objName = value.name as string;
+      if (objName == name) {
+        uid = key;
+      }
+    });
+    return uid;
+  });
+  return uids;
+};
+
 const SendGif = (props: Props) => {
+  const [names, setNames] = useState("");
   const [gif, setGif] = useState(null);
   const firebase = useFirebase();
   const firestore = useFirestore();
+  const storageRef = firebase.storage().ref();
   const { register, handleSubmit, errors, reset } = useForm();
 
   let users: IUser[] = [];
   const state = useSelector((state: any) => state);
   const currentUserUid = state.firebase.auth.uid;
   const currentUserName = state.firebase.profile.name;
+  //get all users from firestore
   const userObj = state.firestore.data.users as Object;
-
   users = getValueOfObject<IUser>(userObj);
+  //remove current user from users
   users = users && users.filter(user => user.name !== currentUserName);
-  const userNames = users && users.map(user => user.name);
-
-  const storageRef = firebase.storage().ref();
 
   const handleImageChange = async (e: any) => {
     try {
@@ -112,64 +137,43 @@ const SendGif = (props: Props) => {
     }
   };
 
-  const getArrayOfSanitizedNames = (names: string): string[] => {
-    const namesArray = names.split(",");
-    namesArray.pop();
-    return namesArray.map((name: string) => {
-      return name.substr(1);
-    });
-  };
-
-  const getUidsFromNames = (
-    names: string[],
-    objArray: [string, any][]
-  ): string[] => {
-    const uids = names.map(name => {
-      let uid = "";
-      objArray.forEach(([key, value]) => {
-        const objName = value.name as string;
-        if (objName == name) {
-          uid = key;
-        }
-      });
-      return uid;
-    });
-    return uids;
-  };
-
   const onSubmit = async (data: any) => {
     const { names, gif }: { names: string; gif: File[] } = data;
     const sanitiledNames = getArrayOfSanitizedNames(names);
-    const objArray = userObj && Object.entries(userObj);
+    const objArray = Object.entries(userObj);
+    const userNames = users.map(user => user.name);
 
-    //* validation
+    // //* validation
     const isAllNamesAreUserNames = sanitiledNames.every(r =>
       userNames.includes(r)
     );
 
     try {
       if (isAllNamesAreUserNames) {
-        //# uid of sent users
+        // uids of sent users
         const uids = getUidsFromNames(sanitiledNames, objArray);
 
-        //# saving image to storage and get the url
+        // saving image to storage and get the url
         const imageRef = storageRef.child(`images/${gif[0].name}`);
         await imageRef.put(gif[0]);
         const imgUrl = await imageRef.getDownloadURL();
 
-        //todo create data;
         const post: IPost = {
           imgUrl,
           created_by: currentUserUid,
           created_at: getCurrentDate(),
           likes: [],
           sent: uids,
-          waittingAnswer: uids,
+          waitingForAnswer: uids,
           comments: []
         };
 
-        const res = await firestore.collection("posts").add(post);
-        console.log("res:", res);
+        await firestore.collection("posts").add(post);
+
+        setGif(null);
+        setNames("");
+
+        alert(`your gif was sent to selected users`);
       } else {
         alert("usernames are incorrect");
       }
@@ -187,6 +191,8 @@ const SendGif = (props: Props) => {
           type="text"
           placeholder="@username,@username,..."
           name="names"
+          value={names}
+          onChange={e => setNames(e.target.value)}
           ref={register({
             required: true,
             min: 5,

@@ -18,7 +18,7 @@ export interface IPost {
   created_at: string;
   likes: string[];
   sent: string[];
-  waittingAnswer: string[];
+  waitingForAnswer: string[];
   comments: Comment[];
 }
 
