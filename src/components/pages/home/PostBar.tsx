@@ -1,13 +1,20 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { useDispatch } from "react-redux";
-import { changePostType } from "../../../redux/slices/postTypeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changePostType,
+  selectPostType
+} from "../../../redux/slices/postTypeSlice";
 import { EPostType } from "../../../@types/enums";
 
 interface Props {}
 
-const PostBarWrapper = styled.div(
-  ({ theme }) => css`
+interface PostTypes {
+  type: number;
+}
+
+const PostBarWrapper = styled.div<PostTypes>(
+  ({ theme, type }) => css`
     background-color: ${theme.color.background.secondary};
     display: flex;
     justify-content: space-around;
@@ -23,13 +30,20 @@ const PostBarWrapper = styled.div(
       cursor: pointer;
       font-weight: lighter;
     }
+    h6:active {
+      color: ${theme.color.font.accent};
+    }
+    h6:nth-child(${type + 1}) {
+      color: ${theme.color.font.accent};
+    }
   `
 );
 
 const PostBar = (props: Props) => {
+  const postType = useSelector(selectPostType);
   const dispatch = useDispatch();
   return (
-    <PostBarWrapper>
+    <PostBarWrapper type={postType.type}>
       <h6 onClick={() => dispatch(changePostType({ type: EPostType.All }))}>
         All
       </h6>
