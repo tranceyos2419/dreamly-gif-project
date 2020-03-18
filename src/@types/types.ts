@@ -19,5 +19,5 @@ export interface IPost {
   likes: string[];
   sent: string[];
   waitingForAnswer: string[];
-  comments: [];
+  comments: Object[];
 }

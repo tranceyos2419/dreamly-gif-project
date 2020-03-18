@@ -13,7 +13,7 @@ interface Props {
   imgUrl: string;
   created_by: string;
   likes: string[];
-  comments: [];
+  comments: Object[];
 }
 
 const PostWrapper = styled.div(
