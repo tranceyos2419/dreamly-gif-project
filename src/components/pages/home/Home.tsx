@@ -5,6 +5,7 @@ import UserList from "./UserList";
 import SendGif from "./SendGif";
 import styled, { css } from "styled-components";
 import Posts from "./posts/Posts";
+import PostBar from "./PostBar";
 
 interface Props {}
 
@@ -19,7 +20,7 @@ const Home = (props: Props) => {
   useToLandingIfNotAuthenticated();
   return (
     <Layout>
-      <h3>Home</h3>
+      <PostBar />
       <HomeWrapper>
         <UserList />
         <Posts />
