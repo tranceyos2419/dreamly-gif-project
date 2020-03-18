@@ -1,12 +1,8 @@
 import React from "react";
-
-import Gravatar from "react-gravatar";
 import styled, { css } from "styled-components";
 import { IUser } from "../../@types/types";
+import UserIcon from "./UserIcon";
 
-//todo make User.tsx global
-//todo pass the value of margin as props
-//todo margin-bottom too
 interface Props extends IUser, Style {}
 
 interface Style {
@@ -25,16 +21,6 @@ const UserWrapper = styled.div<Style>(
   `
 );
 
-const StyledGravatar = styled(Gravatar)(
-  () => css`
-    padding: 0.2em;
-    border-radius: 12px;
-    margin-left: 0.3em;
-    width: 0.8em;
-    height: 0.8em;
-  `
-);
-
 const UserName = styled.p(
   ({ theme }) => css`
     color: #000;
@@ -47,7 +33,7 @@ const User = (props: Props) => {
   const { email, name, margin, marginBottom } = props;
   return (
     <UserWrapper margin={margin} marginBottom={marginBottom}>
-      <StyledGravatar email={email} />
+      <UserIcon email={email} />
       <UserName>{name} </UserName>
     </UserWrapper>
   );

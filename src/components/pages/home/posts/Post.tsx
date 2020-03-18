@@ -37,6 +37,7 @@ const ActionBar = styled.div(
     display: flex;
     justify-content: space-between;
     padding: 0.2em 0.4em;
+    border-bottom: 1px solid #ccc;
   `
 );
 
@@ -100,13 +101,13 @@ const Post = (props: Props) => {
           onClick={() => handleLike()}
         />
         <StyledLetter>Comment</StyledLetter>
-        {comments &&
-          comments.map(commentObj => {
-            const uid = Object.keys(commentObj)[0] as string;
-            const comment = Object.values(commentObj)[0] as string;
-            return <Comment uid={uid} comment={comment} />;
-          })}
       </ActionBar>
+      {comments &&
+        comments.map(commentObj => {
+          const uid = Object.keys(commentObj)[0] as string;
+          const comment = Object.values(commentObj)[0] as string;
+          return <Comment uid={uid} comment={comment} />;
+        })}
     </PostWrapper>
   );
 };
