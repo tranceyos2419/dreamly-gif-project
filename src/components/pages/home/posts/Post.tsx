@@ -8,6 +8,7 @@ import User from "../../../global/User";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import Comment from "./Comment";
+import { GetUserDataFromFirestoreByUid } from "../../../hooks/myCustomHooks";
 interface Props {
   uid: string;
   imgUrl: string;
@@ -59,25 +60,11 @@ const StyledLetter = styled.p(
 
 //todo display comment
 const Post = (props: Props) => {
-  const [creator, setcreator] = useState({ name: "", email: "" });
   const { uid, created_by, imgUrl, likes, comments } = props;
   const state = useSelector((state: any) => state);
   const currentUserUid = state.firebase.auth.uid;
   const wasUserLiked = likes.some(uid => uid === currentUserUid);
-
-  const getcreator = async () => {
-    const res = await firestore()
-      .collection("users")
-      .doc(created_by)
-      .get();
-    const data = res.data();
-    const { name, email } = data;
-    setcreator({ name, email });
-  };
-
-  useEffect(() => {
-    getcreator();
-  }, []);
+  const creator = GetUserDataFromFirestoreByUid(created_by);
 
   const handleLike = async () => {
     try {
