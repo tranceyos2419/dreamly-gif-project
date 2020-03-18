@@ -9,6 +9,7 @@ import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import Comment from "./Comment";
 import { GetUserDataFromFirestoreByUid } from "../../../hooks/myCustomHooks";
+import CommentInput from "./CommentInput";
 interface Props {
   uid: string;
   imgUrl: string;
@@ -51,6 +52,9 @@ const StyledIcon = styled(FontAwesomeIcon)<WasUserLiked>(
   `
 );
 
+//todo add comment Input
+//todo display commentInput when the indicator is Sent
+
 const Post = (props: Props) => {
   const { uid, created_by, imgUrl, likes, comments } = props;
   const state = useSelector((state: any) => state);
@@ -92,6 +96,7 @@ const Post = (props: Props) => {
           onClick={() => handleLike()}
         />
       </ActionBar>
+      <CommentInput />
       {comments &&
         comments.map(commentObj => {
           const uid = Object.keys(commentObj)[0] as string;

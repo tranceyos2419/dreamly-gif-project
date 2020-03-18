@@ -38,6 +38,9 @@ const theme = {
       tabletToDesktop: "1104px"
     }
   },
+  utils: {
+    borderBottom: '1px solid #ccc'
+  }
 }
 
 export default theme;
