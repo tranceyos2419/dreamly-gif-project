@@ -51,15 +51,6 @@ const StyledIcon = styled(FontAwesomeIcon)<WasUserLiked>(
   `
 );
 
-const StyledLetter = styled.p(
-  ({ theme }) => css`
-    color: #000;
-    font-size: ${theme.size.font.small};
-    cursor: pointer;
-  `
-);
-
-//todo display comment
 const Post = (props: Props) => {
   const { uid, created_by, imgUrl, likes, comments } = props;
   const state = useSelector((state: any) => state);
@@ -100,7 +91,6 @@ const Post = (props: Props) => {
           icon={faHeart}
           onClick={() => handleLike()}
         />
-        <StyledLetter>Comment</StyledLetter>
       </ActionBar>
       {comments &&
         comments.map(commentObj => {
