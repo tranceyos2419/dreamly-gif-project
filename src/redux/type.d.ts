@@ -1,3 +1,10 @@
+import { EPostType } from './../@types/enums';
+
+
+export interface PostType {
+  type: EPostType
+}
+
 export interface State {
-  counter: Counter,
+  postType: PostType
 }

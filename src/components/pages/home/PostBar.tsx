@@ -1,5 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useDispatch } from "react-redux";
+import { changePostType } from "../../../redux/slices/postTypeSlice";
+import { EPostType } from "../../../@types/enums";
 
 interface Props {}
 
@@ -24,11 +27,18 @@ const PostBarWrapper = styled.div(
 );
 
 const PostBar = (props: Props) => {
+  const dispatch = useDispatch();
   return (
     <PostBarWrapper>
-      <h6>All</h6>
-      <h6>Inbox</h6>
-      <h6>Sent</h6>
+      <h6 onClick={() => dispatch(changePostType({ type: EPostType.All }))}>
+        All
+      </h6>
+      <h6 onClick={() => dispatch(changePostType({ type: EPostType.Inbox }))}>
+        Inbox
+      </h6>
+      <h6 onClick={() => dispatch(changePostType({ type: EPostType.Sent }))}>
+        Sent
+      </h6>
     </PostBarWrapper>
   );
 };
