@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import { IPost } from "../../../../@types/types";
 
 import Post from "./Post";
+import { selectPostType } from "../../../../redux/slices/postTypeSlice";
+import { EPostType } from "../../../../@types/enums";
+import { bindActionCreators } from "@reduxjs/toolkit";
 
 interface Props {}
 
@@ -19,11 +22,47 @@ const PostsWrapper = styled.div(
 
 //todo display descendently accroding to created_at (especially when user add a gif)
 
+const getPostsArray = (
+  array: [string, unknown][],
+  type: EPostType,
+  currentUserUid: string
+): any => {
+  let newArray: any = null;
+
+  switch (type) {
+    case EPostType.All:
+      return array;
+
+    case EPostType.Inbox:
+      newArray = array.filter(arr => {
+        const post = arr[1] as IPost;
+        return post.sent.some(sentUser => {
+          return sentUser === currentUserUid;
+        });
+      });
+      return newArray;
+
+    case EPostType.Sent:
+      newArray = array.filter(arr => {
+        const post = arr[1] as IPost;
+        return post.created_by === currentUserUid;
+      });
+      return newArray;
+
+    default:
+      return array;
+  }
+};
+
 const Posts = (props: Props) => {
+  const postBarType = useSelector(selectPostType);
   useFirestoreConnect({ collection: "posts" });
   const state = useSelector((state: any) => state);
+  const currentUserUid = state.firebase.auth.uid;
   const postsObj = state.firestore.data.posts;
-  const postsArray = postsObj && Object.entries(postsObj);
+  const array = postsObj && Object.entries(postsObj);
+  const postsArray = getPostsArray(array, postBarType.type, currentUserUid);
+
   return (
     <PostsWrapper>
       {postsArray &&
