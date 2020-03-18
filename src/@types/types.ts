@@ -19,10 +19,5 @@ export interface IPost {
   likes: string[];
   sent: string[];
   waitingForAnswer: string[];
-  comments: IComment[];
-}
-
-export interface IComment {
-  user: string;
-  comment: string;
+  comments: [];
 }

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
-import User from "../../../global/User";
+import User from "../../global/User";
 import styled, { css } from "styled-components";
-import { getValueOfObject } from "../../../../helpers/helpers";
-import { IUser } from "../../../../@types/types";
+import { getValueOfObject } from "../../../helpers/helpers";
+import { IUser } from "../../../@types/types";
 
 interface Props {}
 

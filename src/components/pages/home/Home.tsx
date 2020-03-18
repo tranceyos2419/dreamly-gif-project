@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../../layout/Layout";
 import { useToLandingIfNotAuthenticated } from "../../hooks/myCustomHooks";
-import UserList from "./userlist/UserList";
+import UserList from "./UserList";
 import SendGif from "./SendGif";
 import styled, { css } from "styled-components";
 import Posts from "./posts/Posts";

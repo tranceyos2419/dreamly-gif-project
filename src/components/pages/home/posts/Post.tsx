@@ -3,17 +3,17 @@ import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-import { IComment } from "../../../../@types/types";
 import { firestore } from "firebase";
 import User from "../../../global/User";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
+import Comment from "./Comment";
 interface Props {
   uid: string;
   imgUrl: string;
   created_by: string;
   likes: string[];
-  comments: IComment[];
+  comments: [];
 }
 
 const PostWrapper = styled.div(
@@ -57,7 +57,7 @@ const StyledLetter = styled.p(
   `
 );
 
-//todo toggle comment
+//todo display comment
 const Post = (props: Props) => {
   const [creator, setcreator] = useState({ name: "", email: "" });
   const { uid, created_by, imgUrl, likes, comments } = props;
@@ -113,6 +113,12 @@ const Post = (props: Props) => {
           onClick={() => handleLike()}
         />
         <StyledLetter>Comment</StyledLetter>
+        {comments &&
+          comments.map(commentObj => {
+            const uid = Object.keys(commentObj)[0] as string;
+            const comment = Object.values(commentObj)[0] as string;
+            return <Comment uid={uid} comment={comment} />;
+          })}
       </ActionBar>
     </PostWrapper>
   );
