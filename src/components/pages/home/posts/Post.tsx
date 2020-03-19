@@ -96,7 +96,11 @@ const Post = (props: Props) => {
           onClick={() => handleLike()}
         />
       </ActionBar>
-      <CommentInput />
+      <CommentInput
+        uid={uid}
+        currentUserUid={currentUserUid}
+        comments={comments}
+      />
       {comments &&
         comments.map(commentObj => {
           const uid = Object.keys(commentObj)[0] as string;

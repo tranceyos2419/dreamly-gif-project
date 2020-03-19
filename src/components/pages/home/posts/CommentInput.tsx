@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
+import { useFirestore } from "react-redux-firebase";
 
-interface Props {}
+interface Props {
+  uid: string;
+  currentUserUid: string;
+  comments: any[];
+}
 
 const StyledForm = styled.form(
   ({ theme }) => css`
@@ -37,14 +42,36 @@ const SubmitInput = styled.input(
 );
 
 //todo handle error
+//todo intialize the commetn
 const CommentInput = (props: Props) => {
+  const { uid, currentUserUid, comments } = props;
+  // const [inputComment, setInputComment] = useState("");
   const { register, handleSubmit, errors, reset } = useForm();
+  const firestore = useFirestore();
 
   const onSubmit = async (data: any) => {
     const { comment } = data;
+    let obj: any = {};
+    obj[currentUserUid] = comment;
+
+    let mutableComments: Object[] = comments.map(item =>
+      Object.assign({}, item)
+    );
+
+    mutableComments = mutableComments.filter(
+      comment => Object.keys(comment)[0] !== Object.keys(obj)[0]
+    );
+    mutableComments.push(obj);
+
     try {
+      await firestore
+        .collection("posts")
+        .doc(uid)
+        .set({ comments: mutableComments }, { merge: true });
+
+      // setInputComment("");
     } catch (error) {
-      alert("failed to sign in");
+      alert("failed to add the comment");
     }
   };
 
@@ -54,6 +81,8 @@ const CommentInput = (props: Props) => {
         type="text"
         placeholder="Add a comment"
         name="comment"
+        // value={inputComment}
+        // onChange={e => setInputComment(e.target.value)}
         ref={register({ required: true, minLength: 5 })}
       />
       <SubmitInput type="submit" />

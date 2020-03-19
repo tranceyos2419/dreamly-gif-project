@@ -183,7 +183,6 @@ const SendGif = (props: Props) => {
       } else {
         alert("usernames are incorrect");
       }
-      console.log("name", gif[0]);
     } catch (error) {
       alert("failed to sign up");
     }
