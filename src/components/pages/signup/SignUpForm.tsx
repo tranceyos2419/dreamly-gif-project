@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import {
   useFirebase,
   useFirestore,
-  useFirebaseConnect
 } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import { IError, IInput } from "../../../@types/types";

@@ -1,12 +1,10 @@
 import React from "react";
-import dayjs from "dayjs";
 import styled, { css } from "styled-components";
-import { GetErrorMessage, getCurrentDate } from "../../../helpers/helpers";
+import { GetErrorMessage } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
 import {
   useFirebase,
   useFirestore,
-  useFirebaseConnect
 } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import { IError, IInput } from "../../../@types/types";
