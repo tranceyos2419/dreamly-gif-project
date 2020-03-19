@@ -86,7 +86,7 @@ const Post = (props: Props) => {
         .doc(uid)
         .update({ likes: newLikes });
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
     }
   };
 

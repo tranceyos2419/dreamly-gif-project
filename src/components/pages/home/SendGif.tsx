@@ -139,7 +139,7 @@ const SendGif = (props: Props) => {
         setGif(file);
       }
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
     }
   };
 
