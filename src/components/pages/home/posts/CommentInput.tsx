@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { useFirestore } from "react-redux-firebase";
+import { IError, IInput } from "../../../../@types/types";
+import { GetErrorMessage } from "../../../../helpers/helpers";
 
 interface Props {
   uid: string;
@@ -16,13 +18,17 @@ const StyledForm = styled.form(
   `
 );
 
-const StyledInput = styled.input(
-  ({ theme }) => css`
+const StyledInput = styled.input<IError>(
+  ({ theme, error }) => css`
     height: 100%;
     border: none;
+    border-bottom: ${error ? `1.5px solid ${theme.color.font.error} ` : `none`};
     width: 70%;
     font-size: ${theme.size.font.extraSmall};
     padding: 0.2em;
+    &:focus {
+      outline: ${error && "none !important"};
+    }
   `
 );
 
@@ -41,11 +47,18 @@ const SubmitInput = styled.input(
   `
 );
 
-//todo handle error
-//todo intialize the commetn
+const ErrorMessage = styled.div(
+  ({ theme }) => css`
+    font-size: ${theme.size.font.tiny};
+    color: ${theme.color.font.error};
+    padding-bottom: 0.5em;
+    width: 80%;
+    text-align: center;
+  `
+);
+
 const CommentInput = (props: Props) => {
   const { uid, currentUserUid, comments } = props;
-  // const [inputComment, setInputComment] = useState("");
   const { register, handleSubmit, errors, reset } = useForm();
   const firestore = useFirestore();
 
@@ -64,12 +77,11 @@ const CommentInput = (props: Props) => {
     mutableComments.push(obj);
 
     try {
+      reset();
       await firestore
         .collection("posts")
         .doc(uid)
         .set({ comments: mutableComments }, { merge: true });
-
-      // setInputComment("");
     } catch (error) {
       alert("failed to add the comment");
     }
@@ -81,11 +93,13 @@ const CommentInput = (props: Props) => {
         type="text"
         placeholder="Add a comment"
         name="comment"
-        // value={inputComment}
-        // onChange={e => setInputComment(e.target.value)}
-        ref={register({ required: true, minLength: 5 })}
+        ref={register({ required: true })}
+        error={errors.comment ? true : false}
       />
       <SubmitInput type="submit" />
+      <ErrorMessage>
+        {errors.comment && GetErrorMessage(errors.comment as IInput, "comment")}
+      </ErrorMessage>
     </StyledForm>
   );
 };
