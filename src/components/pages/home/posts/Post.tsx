@@ -10,12 +10,15 @@ import { useSelector } from "react-redux";
 import Comment from "./Comment";
 import { GetUserDataFromFirestoreByUid } from "../../../hooks/myCustomHooks";
 import CommentInput from "./CommentInput";
+import { EPostType } from "../../../../@types/enums";
+
 interface Props {
   uid: string;
   imgUrl: string;
   created_by: string;
   likes: string[];
   comments: Object[];
+  type: EPostType;
 }
 
 const PostWrapper = styled.div(
@@ -52,11 +55,8 @@ const StyledIcon = styled(FontAwesomeIcon)<WasUserLiked>(
   `
 );
 
-//todo add comment Input
-//todo display commentInput when the indicator is Sent
-
 const Post = (props: Props) => {
-  const { uid, created_by, imgUrl, likes, comments } = props;
+  const { uid, created_by, imgUrl, likes, comments, type } = props;
   const state = useSelector((state: any) => state);
   const currentUserUid = state.firebase.auth.uid;
   const wasUserLiked = likes.some(uid => uid === currentUserUid);
@@ -96,11 +96,14 @@ const Post = (props: Props) => {
           onClick={() => handleLike()}
         />
       </ActionBar>
-      <CommentInput
-        uid={uid}
-        currentUserUid={currentUserUid}
-        comments={comments}
-      />
+
+      {type === EPostType.Inbox && (
+        <CommentInput
+          uid={uid}
+          currentUserUid={currentUserUid}
+          comments={comments}
+        />
+      )}
       {comments &&
         comments.map(commentObj => {
           const uid = Object.keys(commentObj)[0] as string;

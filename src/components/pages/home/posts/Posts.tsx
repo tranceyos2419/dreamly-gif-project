@@ -12,15 +12,10 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 interface Props {}
 
 const PostsWrapper = styled.div(
-  ({ theme }) => css`
-    /* padding: 0.5em 0.2em; */
-    /* background-color: ${theme.color.background.secondary}; */
+  () => css`
     width: 40%; //!fixed
-    /* border-radius: ${theme.size.radius.regular}; */
   `
 );
-
-//todo display descendently accroding to created_at (especially when user add a gif)
 
 const getPostsArray = (
   array: [string, unknown][],
@@ -61,6 +56,14 @@ const Posts = (props: Props) => {
   const currentUserUid = state.firebase.auth.uid;
   const postsObj = state.firestore.data.posts;
   const array = postsObj && Object.entries(postsObj);
+
+  // sorting posts by created_at
+  array &&
+    array.sort((a, b) => {
+      const aPost = a[1] as IPost;
+      const bPost = b[1] as IPost;
+      return Date.parse(bPost.created_at) - Date.parse(aPost.created_at);
+    });
   const postsArray = getPostsArray(array, postBarType.type, currentUserUid);
 
   return (
@@ -77,6 +80,7 @@ const Posts = (props: Props) => {
               created_by={created_by}
               likes={likes}
               comments={comments}
+              type={postBarType.type}
             />
           );
         })}
