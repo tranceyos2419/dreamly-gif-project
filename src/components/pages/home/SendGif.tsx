@@ -108,7 +108,6 @@ const getUidsFromNames = (
 };
 
 const SendGif = (props: Props) => {
-  const [names, setNames] = useState("");
   const [gif, setGif] = useState(null);
   useFirestoreConnect({ collection: "users" });
   const firebase = useFirebase();
@@ -171,7 +170,7 @@ const SendGif = (props: Props) => {
         await firestore.collection("posts").add(post);
 
         setGif(null);
-        setNames("");
+        reset();
 
         alert(`your gif was sent to selected users`);
       } else {
@@ -190,8 +189,6 @@ const SendGif = (props: Props) => {
           type="text"
           placeholder="@username,@username,..."
           name="names"
-          value={names}
-          onChange={e => setNames(e.target.value)}
           ref={register({
             required: true,
             min: 5,
