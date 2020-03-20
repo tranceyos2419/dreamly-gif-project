@@ -2,6 +2,7 @@ import React from "react";
 import { useToHomeIfAuthenticated } from "../../hooks/myCustomHooks";
 import styled, { css } from "styled-components";
 import SignInForm from "./SignInForm";
+import Spacer from "../../global/Spacer";
 
 interface Props {}
 
@@ -12,17 +13,11 @@ const HeadLine = styled.h3(
   `
 );
 
-const Spacer = styled.div(
-  () => css`
-    height: 4em;
-  `
-);
-
 const SignIn = (props: Props) => {
   useToHomeIfAuthenticated();
   return (
     <>
-      <Spacer />
+    <Spacer height="4em" />
       <HeadLine>Sign In</HeadLine>
       <SignInForm />
     </>

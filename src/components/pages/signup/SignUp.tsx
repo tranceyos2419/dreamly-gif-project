@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import SignUpForm from "./SignUpForm";
 import styled, { css } from "styled-components";
 import { useToHomeIfAuthenticated } from "../../hooks/myCustomHooks";
+import Spacer from "../../global/Spacer";
 
 interface Props {}
 
@@ -12,17 +13,11 @@ const HeadLine = styled.h3(
   `
 );
 
-const Spacer = styled.div(
-  () => css`
-    height: 3em;
-  `
-);
-
 const SignUp = (props: Props) => {
   useToHomeIfAuthenticated();
   return (
     <div>
-      <Spacer />
+      <Spacer height="3em" />
       <HeadLine>Sign up</HeadLine>
       <SignUpForm />
     </div>

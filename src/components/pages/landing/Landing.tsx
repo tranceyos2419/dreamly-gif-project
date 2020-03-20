@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import background from "../../../assets/images/Landing-background.svg";
 import { Link } from "react-router-dom";
 import { useToHomeIfAuthenticated } from "../../hooks/myCustomHooks";
+import Spacer from "../../global/Spacer";
 interface Props {}
 
 const LandingWrapper = styled.div(
@@ -15,12 +16,6 @@ const LandingWrapper = styled.div(
 const HeadLine = styled.h3(
   ({ theme }) => css`
     font-size: ${theme.size.font.huge};
-  `
-);
-
-const Spacer = styled.div(
-  () => css`
-    height: 6em;
   `
 );
 
@@ -51,7 +46,7 @@ const Landing = (props: Props) => {
   useToHomeIfAuthenticated();
   return (
     <LandingWrapper>
-      <Spacer />
+      <Spacer height="6em" />
       <HeadLine>Dreamly Gif Project</HeadLine>
       <ButtonWrapper>
         <Link to="/signup">
