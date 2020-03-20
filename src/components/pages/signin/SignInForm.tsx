@@ -8,6 +8,7 @@ import {
 } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import { IError, IInput } from "../../../@types/types";
+import ErrorMessage from "../../global/ErrorMessage";
 
 interface Props {}
 
@@ -79,12 +80,7 @@ const ErrorMessageWrapper = styled.div(
   `
 );
 
-const ErrorMessage = styled.div(
-  ({ theme }) => css`
-    font-size: ${theme.size.font.tiny};
-    color: ${theme.color.font.error};
-  `
-);
+
 
 const SignInForm = (props: Props) => {
   const { register, handleSubmit, errors, reset } = useForm();
@@ -112,9 +108,7 @@ const SignInForm = (props: Props) => {
         error={errors.email ? true : false}
       />
       <ErrorMessageWrapper>
-        <ErrorMessage>
-          {errors.email && GetErrorMessage(errors.email as IInput, "E-mail")}
-        </ErrorMessage>
+        <ErrorMessage error={errors.email} errorName="E-mail" />
       </ErrorMessageWrapper>
       <StyledInput
         type="password"
@@ -124,10 +118,7 @@ const SignInForm = (props: Props) => {
         error={errors.password ? true : false}
       />
       <ErrorMessageWrapper>
-        <ErrorMessage>
-          {errors.password &&
-            GetErrorMessage(errors.password as IInput, "Password")}
-        </ErrorMessage>
+        <ErrorMessage error={errors.password} errorName="Password" />
       </ErrorMessageWrapper>
       <SubmitWrapper>
         <SubmitInput type="submit" />

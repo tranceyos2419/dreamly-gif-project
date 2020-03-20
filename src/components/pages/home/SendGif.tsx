@@ -13,6 +13,7 @@ import {
   useFirestoreConnect
 } from "react-redux-firebase";
 import { useSelector } from "react-redux";
+import ErrorMessage from "../../global/ErrorMessage";
 
 interface Props {}
 
@@ -53,13 +54,6 @@ const StyledInput = styled.input<IError>(
       outline: none !important;
       border-color: ${theme.color.font.accent};
     }
-  `
-);
-
-const ErrorMessage = styled.div(
-  ({ theme }) => css`
-    font-size: ${theme.size.font.tiny};
-    color: ${theme.color.font.error};
   `
 );
 
@@ -205,9 +199,7 @@ const SendGif = (props: Props) => {
           })}
           error={errors.names ? true : false}
         />
-        <ErrorMessage>
-          {errors.names && GetErrorMessage(errors.names as IInput, "Name")}
-        </ErrorMessage>
+        <ErrorMessage error={errors.names} errorName={'Name'} />
         <StyledLabel htmlFor="gif">
           {gif !== null ? gif.name : "Choose a gif"}
         </StyledLabel>
@@ -221,9 +213,7 @@ const SendGif = (props: Props) => {
           onChange={e => handleImageChange(e)}
           ref={register({ required: true })}
         />
-        <ErrorMessage>
-          {errors.gif && GetErrorMessage(errors.gif as IInput, "Gif")}
-        </ErrorMessage>
+        <ErrorMessage error={errors.gif} errorName="Gif" />
         <SubmitInput type="submit" />
       </form>
     </SendGifWrapper>
