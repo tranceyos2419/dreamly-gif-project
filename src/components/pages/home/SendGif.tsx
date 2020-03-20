@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
-import { IError, IInput, IUser, IPost } from "../../../@types/types";
+import { IError,  IUser, IPost } from "../../../@types/types";
 import {
   GetErrorMessage,
   getValueOfObject,

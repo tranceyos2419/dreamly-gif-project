@@ -1,13 +1,13 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { GetErrorMessage, getCurrentDate } from "../../../helpers/helpers";
+import {  getCurrentDate } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
 import {
   useFirebase,
   useFirestore,
 } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
-import { IError, IInput } from "../../../@types/types";
+import { IError,  } from "../../../@types/types";
 import ErrorMessage from "../../global/ErrorMessage";
 interface Props {}
 

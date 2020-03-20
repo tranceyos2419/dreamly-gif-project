@@ -2,8 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { useFirestore } from "react-redux-firebase";
-import { IError, IInput } from "../../../../@types/types";
-import { GetErrorMessage } from "../../../../helpers/helpers";
+import { IError, } from "../../../../@types/types";
 import ErrorMessage from "../../../global/ErrorMessage";
 
 interface Props {
