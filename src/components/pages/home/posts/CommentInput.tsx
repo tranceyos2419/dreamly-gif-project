@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import { useFirestore } from "react-redux-firebase";
 import { IError, IInput } from "../../../../@types/types";
 import { GetErrorMessage } from "../../../../helpers/helpers";
+import ErrorMessage from "../../../global/ErrorMessage";
 
 interface Props {
   uid: string;
@@ -47,10 +48,8 @@ const SubmitInput = styled.input(
   `
 );
 
-const ErrorMessage = styled.div(
+const ErrorMessageWrapper = styled.div(
   ({ theme }) => css`
-    font-size: ${theme.size.font.tiny};
-    color: ${theme.color.font.error};
     padding-bottom: 0.5em;
     width: 80%;
     text-align: center;
@@ -97,9 +96,9 @@ const CommentInput = (props: Props) => {
         error={errors.comment ? true : false}
       />
       <SubmitInput type="submit" />
-      <ErrorMessage>
-        {errors.comment && GetErrorMessage(errors.comment as IInput, "comment")}
-      </ErrorMessage>
+      <ErrorMessageWrapper>
+        <ErrorMessage error={errors.comment} errorName="comment" />
+      </ErrorMessageWrapper>
     </StyledForm>
   );
 };
