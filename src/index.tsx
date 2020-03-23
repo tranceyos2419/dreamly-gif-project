@@ -9,6 +9,12 @@ import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { rrfProps } from "./config/fbConfig";
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/theme";
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
+
+LogRocket.init('xirvnf/dreamly-gif-projectstaging');
+setupLogRocketReact(LogRocket);
+
 
 ReactDOM.render(
   <Provider store={store}>
