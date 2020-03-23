@@ -6,6 +6,9 @@ import { useFirebase, useFirestore } from "react-redux-firebase";
 import Gravatar from "react-gravatar";
 import logoutIcon from "../../assets/images/logout-icon.svg";
 import { useHistory } from "react-router-dom";
+import LogRocket from 'logrocket';
+
+
 
 interface Props {}
 
@@ -64,10 +67,16 @@ const LogoutIcon = styled.img(
 const Navbar = (props: Props) => {
   const state = useSelector((state: any) => state);
   const email = state.firebase.auth.email as string;
+  const uid = state.firebase.auth.uid as string;
   const [username, setUsername] = useState("");
   const firestore = useFirestore();
   const firebase = useFirebase();
   const history = useHistory();
+
+  LogRocket.identify(uid, {
+    name: username,
+    email: email,
+  });
 
   const getUserName = async () => {
     const res = await firestore
