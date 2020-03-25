@@ -12,6 +12,8 @@ This is the website on which people can share gifs to others
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Development setup](#development-setup)
+- [Hosting](#hosting)
+- [External APIs](#external-apis)
 
 # Installation
 
@@ -38,3 +40,16 @@ Run the command below
 ```bash
 npm run start
 ```
+
+# Hosting
+
+This one is hosted on Firebase Hosting
+This is the [website](https://dreamly-gif-project.firebaseapp.com/)
+
+
+
+# External APIs
+
+- Firebase - Hosting, Database, Storage
+- LogRocket - Error tracking
+- Sentry - Error tracking
