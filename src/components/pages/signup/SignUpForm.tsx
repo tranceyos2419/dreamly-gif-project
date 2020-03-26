@@ -1,19 +1,21 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import {  getCurrentDate } from "../../../helpers/helpers";
+import { getCurrentDate } from "../../../helpers/helpers";
 import { useForm } from "react-hook-form";
-import {
-  useFirebase,
-  useFirestore,
-} from "react-redux-firebase";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import ErrorMessage from "../../global/ErrorMessage";
-import { StyledForm, StyledInput, SubmitWrapper, SubmitInput, ErrorMessageWrapper } from "../../../styles/authForm";
+import {
+  StyledForm,
+  StyledInput,
+  SubmitWrapper,
+  SubmitInput,
+  ErrorMessageWrapper
+} from "../../../styles/authForm";
 
 interface Props {}
 
 const SignUpForm = (props: Props) => {
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const firebase = useFirebase();
   const firestore = useFirestore();
   const history = useHistory();

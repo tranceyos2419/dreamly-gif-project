@@ -1,20 +1,22 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
-import {
-  useFirebase,
-  useFirestore,
-} from "react-redux-firebase";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import ErrorMessage from "../../global/ErrorMessage";
-import { StyledForm, StyledInput, SubmitWrapper, SubmitInput, ErrorMessageWrapper } from "../../../styles/authForm";
+import {
+  StyledForm,
+  StyledInput,
+  SubmitWrapper,
+  SubmitInput,
+  ErrorMessageWrapper
+} from "../../../styles/authForm";
 
 interface Props {}
 
 const SignInForm = (props: Props) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const firebase = useFirebase();
-  const firestore = useFirestore();
   const history = useHistory();
 
   const onSubmit = async (data: any) => {

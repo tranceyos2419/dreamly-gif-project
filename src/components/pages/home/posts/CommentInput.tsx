@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { useFirestore } from "react-redux-firebase";
-import { IError, } from "../../../../@types/types";
+import { IError } from "../../../../@types/types";
 import ErrorMessage from "../../../global/ErrorMessage";
 
 interface Props {
@@ -62,16 +62,19 @@ const CommentInput = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     const { comment } = data;
-    let obj: any = {};
-    obj[currentUserUid] = comment;
-
     let mutableComments: Object[] = comments.map(item =>
       Object.assign({}, item)
     );
+    let obj: any = {};
 
+    obj[currentUserUid] = comment;
+
+    // removing current user's comment from all the comments
     mutableComments = mutableComments.filter(
       comment => Object.keys(comment)[0] !== Object.keys(obj)[0]
     );
+
+    // adding a new comment
     mutableComments.push(obj);
 
     try {

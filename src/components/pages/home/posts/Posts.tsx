@@ -17,11 +17,11 @@ const PostsWrapper = styled.div(
   `
 );
 
-const getPostsArray = (
+const filterPostsArrayBasedOnPostBartType = (
   array: [string, unknown][],
   type: EPostType,
   currentUserUid: string
-): any => {
+): [string, unknown][] => {
   let newArray: any = null;
 
   switch (type) {
@@ -64,7 +64,11 @@ const Posts = (props: Props) => {
       const bPost = b[1] as IPost;
       return Date.parse(bPost.created_at) - Date.parse(aPost.created_at);
     });
-  const postsArray = getPostsArray(array, postBarType.type, currentUserUid);
+  const postsArray = filterPostsArrayBasedOnPostBartType(
+    array,
+    postBarType.type,
+    currentUserUid
+  );
 
   return (
     <PostsWrapper>
