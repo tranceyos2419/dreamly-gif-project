@@ -37,7 +37,7 @@ export const GetUserDataFromFirestoreByUid = (uid: string): IUser => {
         .doc(uid)
         .get();
       const data = res.data();
-      const { name, email } = data;
+      const { name, email, created_at } = data;
       setUser({ name, email });
     };
     getuser();

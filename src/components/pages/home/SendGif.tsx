@@ -92,11 +92,11 @@ const getArrayOfSanitizedNames = (names: string): string[] => {
 
 const getUidsFromNames = (
   names: string[],
-  objArray: [string, any][]
+  uidUserArray: [string, IUser][]
 ): string[] => {
   const uids = names.map(name => {
     let uid = "";
-    objArray.forEach(([key, value]) => {
+    uidUserArray.forEach(([key, value]) => {
       const objName = value.name as string;
       if (objName == name) {
         uid = key;
@@ -139,7 +139,7 @@ const SendGif = (props: Props) => {
   const onSubmit = async (data: any) => {
     const { names, gif }: { names: string; gif: File[] } = data;
     const sanitiledNames = getArrayOfSanitizedNames(names);
-    const objArray = Object.entries(userObj);
+    const uidUserArray = Object.entries(userObj) as [string, IUser][];
     const userNames = users.map(user => user.name);
 
     // //* validation
@@ -150,7 +150,7 @@ const SendGif = (props: Props) => {
     try {
       if (isAllNamesAreUserNames) {
         // uids of sent users
-        const uids = getUidsFromNames(sanitiledNames, objArray);
+        const uids = getUidsFromNames(sanitiledNames, uidUserArray);
 
         // saving image to storage and get the url
         const imageRef = storageRef.child(`images/${gif[0].name}`);
