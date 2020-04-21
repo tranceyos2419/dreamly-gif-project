@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 36px;
+}
+
+body {
+  font-family: "Mukta", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  background-color: #3c1a4c;
+  text-align: center;
+}
