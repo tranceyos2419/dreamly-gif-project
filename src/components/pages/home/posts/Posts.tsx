@@ -7,7 +7,6 @@ import { IPost } from "../../../../@types/types";
 import Post from "./Post";
 import { selectPostType } from "../../../../redux/slices/postTypeSlice";
 import { EPostType } from "../../../../@types/enums";
-import { bindActionCreators } from "@reduxjs/toolkit";
 
 interface Props {}
 
