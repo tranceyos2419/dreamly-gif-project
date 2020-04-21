@@ -43,6 +43,7 @@ const UserList = (props: Props) => {
           const { name, email } = user;
           return (
             <User
+              key={name}
               name={name}
               email={email}
               margin="0em 0.4em"

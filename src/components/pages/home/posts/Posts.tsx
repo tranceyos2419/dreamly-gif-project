@@ -79,6 +79,7 @@ const Posts = (props: Props) => {
           const { imgUrl, created_by, likes, comments } = post;
           return (
             <Post
+              key={uid}
               uid={uid}
               imgUrl={imgUrl}
               created_by={created_by}

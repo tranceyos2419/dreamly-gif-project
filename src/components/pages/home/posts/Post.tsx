@@ -69,14 +69,14 @@ const Post = (props: Props) => {
   const { uid, created_by, imgUrl, likes, comments, type } = props;
   const state = useSelector((state: any) => state);
   const currentUserUid = state.firebase.auth.uid;
-  const wasUserLiked = likes.some(uid => uid === currentUserUid);
+  const wasUserLiked = likes.some((uid) => uid === currentUserUid);
   const creator = GetUserDataFromFirestoreByUid(created_by);
 
   const handleLike = async () => {
     try {
       let newLikes = [];
       if (wasUserLiked) {
-        newLikes = likes.filter(id => id !== currentUserUid);
+        newLikes = likes.filter((id) => id !== currentUserUid);
       } else {
         newLikes = Object.assign([], likes);
         newLikes.push(currentUserUid);
@@ -118,10 +118,10 @@ const Post = (props: Props) => {
         />
       )}
       {comments &&
-        comments.map(commentObj => {
+        comments.map((commentObj) => {
           const uid = Object.keys(commentObj)[0] as string;
           const comment = Object.values(commentObj)[0] as string;
-          return <Comment uid={uid} comment={comment} />;
+          return <Comment key={uid} uid={uid} comment={comment} />;
         })}
     </PostWrapper>
   );
