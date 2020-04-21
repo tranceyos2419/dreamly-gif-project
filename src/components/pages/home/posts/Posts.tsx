@@ -29,16 +29,16 @@ const filterPostsArrayBasedOnPostBartType = (
       return array;
 
     case EPostType.Inbox:
-      newArray = array.filter(arr => {
+      newArray = array.filter((arr) => {
         const post = arr[1] as IPost;
-        return post.sent.some(sentUser => {
+        return post.sent.some((sentUser) => {
           return sentUser === currentUserUid;
         });
       });
       return newArray;
 
     case EPostType.Sent:
-      newArray = array.filter(arr => {
+      newArray = array.filter((arr) => {
         const post = arr[1] as IPost;
         return post.created_by === currentUserUid;
       });

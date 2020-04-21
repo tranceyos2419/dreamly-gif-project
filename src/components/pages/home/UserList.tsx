@@ -33,7 +33,7 @@ const UserList = (props: Props) => {
   const currentUserName = state.firebase.profile.name;
   const userObj = state.firestore.data.users as Object;
   users = getValueOfObject<IUser>(userObj);
-  users = users && users.filter(user => user.name !== currentUserName);
+  users = users && users.filter((user) => user.name !== currentUserName);
 
   return (
     <UserListWrapper>

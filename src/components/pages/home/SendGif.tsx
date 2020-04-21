@@ -5,12 +5,12 @@ import { IError, IUser, IPost } from "../../../@types/types";
 import {
   GetErrorMessage,
   getValueOfObject,
-  getCurrentDate
+  getCurrentDate,
 } from "../../../helpers/helpers";
 import {
   useFirebase,
   useFirestore,
-  useFirestoreConnect
+  useFirestoreConnect,
 } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import ErrorMessage from "../../global/ErrorMessage";
@@ -94,7 +94,7 @@ const getUidsFromNames = (
   names: string[],
   uidUserArray: [string, IUser][]
 ): string[] => {
-  const uids = names.map(name => {
+  const uids = names.map((name) => {
     let uid = "";
     uidUserArray.forEach(([key, value]) => {
       const objName = value.name as string;
@@ -123,7 +123,7 @@ const SendGif = (props: Props) => {
   const userObj = state.firestore.data.users as Object;
   users = getValueOfObject<IUser>(userObj);
   //remove current user from users
-  users = users && users.filter(user => user.name !== currentUserName);
+  users = users && users.filter((user) => user.name !== currentUserName);
 
   const handleImageChange = async (e: any) => {
     try {
@@ -140,10 +140,11 @@ const SendGif = (props: Props) => {
     const { names, gif }: { names: string; gif: File[] } = data;
     const sanitiledNames = getArrayOfSanitizedNames(names);
     const uidUserArray = Object.entries(userObj) as [string, IUser][];
-    const userNames = users.map(user => user.name);
+    console.log("uidUserArray:", uidUserArray);
+    const userNames = users.map((user) => user.name);
 
     // //* validation
-    const isAllNamesAreUserNames = sanitiledNames.every(r =>
+    const isAllNamesAreUserNames = sanitiledNames.every((r) =>
       userNames.includes(r)
     );
 
@@ -164,7 +165,7 @@ const SendGif = (props: Props) => {
           likes: [],
           sent: uids,
           waitingForAnswer: uids,
-          comments: []
+          comments: [],
         };
 
         await firestore.collection("posts").add(post);
@@ -192,7 +193,7 @@ const SendGif = (props: Props) => {
           ref={register({
             required: true,
             min: 5,
-            pattern: /^@+\S+,+$/i
+            pattern: /^@+\S+,+$/i,
           })}
           error={errors.names ? true : false}
         />
@@ -207,7 +208,7 @@ const SendGif = (props: Props) => {
           accept="image/gif"
           multiple={false}
           style={{ display: "none" }}
-          onChange={e => handleImageChange(e)}
+          onChange={(e) => handleImageChange(e)}
           ref={register({ required: true })}
         />
         <ErrorMessage error={errors.gif} errorName="Gif" />

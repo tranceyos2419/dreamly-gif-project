@@ -31,16 +31,17 @@ export const GetUserDataFromFirestoreByUid = (uid: string): IUser => {
   const [user, setUser] = useState({ name: "", email: "" })
 
   useEffect(() => {
-    const getuser = async () => {
+    const getUser = async () => {
       const res = await firestore()
         .collection("users")
         .doc(uid)
         .get();
       const data = res.data();
+      if (data === undefined) return;
       const { name, email, created_at } = data;
       setUser({ name, email });
     };
-    getuser();
+    getUser();
   }, [uid]);
 
   return user;
